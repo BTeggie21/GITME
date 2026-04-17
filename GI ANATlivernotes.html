@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🫀 Liver Integrated Reviewer | Med Student Edition</title>
+  <style>
+    :root {
+      --primary: #2c5f8d;
+      --secondary: #4a90a4;
+      --accent: #e67e22;
+      --light: #f8f9fa;
+      --dark: #2c3e50;
+      --success: #27ae60;
+      --warning: #f39c12;
+      --danger: #c0392b;
+      --gray: #6c757d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f7fa;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    header p { opacity: 0.9; font-size: 1.1rem; }
+    
+    /* Navigation */
+    .toc {
+      background: var(--light);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .toc h3 { margin-bottom: 0.8rem; color: var(--dark); }
+    .toc ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.2rem;
+      list-style: none;
+    }
+    .toc a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .toc a:hover {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    /* Content Sections */
+    section {
+      padding: 1.8rem 2rem;
+      border-bottom: 1px solid #eee;
+    }
+    section:last-child { border-bottom: none; }
+    section h2 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    section h3 {
+      color: var(--dark);
+      margin: 1.2rem 0 0.8rem;
+    }
+    
+    /* Cards & Boxes */
+    .card {
+      background: white;
+      border-left: 4px solid var(--secondary);
+      padding: 1rem 1.2rem;
+      margin: 0.8rem 0;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .card.clinical { border-left-color: var(--danger); }
+    .card.tip { border-left-color: var(--success); }
+    .card.discriminator { border-left-color: var(--accent); }
+    
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 0.7rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+    tr:hover { background: #f8f9fa; }
+    
+    /* Collapsible */
+    details {
+      margin: 0.8rem 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    summary {
+      background: var(--light);
+      padding: 0.9rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    summary::after {
+      content: "▼";
+      font-size: 0.8rem;
+      transition: transform 0.2s;
+    }
+    details[open] summary::after { transform: rotate(180deg); }
+    .details-content { padding: 1rem 1.2rem; background: white; }
+    
+    /* Tags */
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin: 0.2rem;
+    }
+    .tag.parts { background: #e3f2fd; color: #1976d2; }
+    .tag.spatial { background: #e8f5e9; color: #388e3c; }
+    .tag.clinical { background: #ffebee; color: #c62828; }
+    .tag.discriminator { background: #fff3e0; color: #ef6c00; }
+    .tag.function { background: #f3e5f5; color: #7b1fa2; }
+    .tag.embryology { background: #e0f7fa; color: #00838f; }
+    
+    /* Quick Facts Grid */
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .fact-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .fact-box h4 { margin-bottom: 0.5rem; font-size: 1.8rem; }
+    .fact-box p { font-size: 0.9rem; opacity: 0.95; }
+    
+    /* Quiz */
+    .quiz-item {
+      margin: 1.2rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+    }
+    .quiz-options label {
+      display: block;
+      padding: 0.4rem 0;
+      cursor: pointer;
+    }
+    .quiz-answer {
+      margin-top: 0.8rem;
+      padding: 0.6rem;
+      background: var(--success);
+      color: white;
+      border-radius: 4px;
+      display: none;
+    }
+    .quiz-item.show-answer .quiz-answer { display: block; }
+    .toggle-answer {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    /* Search */
+    .search-box {
+      padding: 1rem 2rem;
+      background: var(--light);
+      border-bottom: 1px solid #eee;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.8rem; }
+      .toc ul { flex-direction: column; gap: 0.3rem; }
+      section { padding: 1.5rem; }
+      table { font-size: 0.9rem; }
+      th, td { padding: 0.5rem 0.8rem; }
+    }
+    
+    /* Print */
+    @media print {
+      .toc, .search-box, .toggle-answer { display: none; }
+      body { background: white; padding: 0; }
+      .container { box-shadow: none; border-radius: 0; }
+      details[open] .details-content { display: block !important; }
+      .quiz-answer { display: block !important; background: #e8f5e9; color: #2e7d32; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🫀 Liver Integrated Reviewer</h1>
+      <p>High-Yield Anatomy • Biliary System • Clinical Correlates • For 1st Year Med Students</p>
+    </header>
+    
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 Search topics (e.g., Couinaud, Cantlie, cholecystectomy)..." onkeyup="filterContent()">
+    </div>
+    
+    <nav class="toc">
+      <h3>📑 Quick Navigation</h3>
+      <ul>
+        <li><a href="#gross">Gross Anatomy</a></li>
+        <li><a href="#functional">Functional Segments</a></li>
+        <li><a href="#ligaments">Ligaments & Supports</a></li>
+        <li><a href="#functions">Key Functions</a></li>
+        <li><a href="#gallbladder">Gallbladder & Biliary Tree</a></li>
+        <li><a href="#clinical">Clinical Correlates</a></li>
+        <li><a href="#tables">Quick Reference Tables</a></li>
+        <li><a href="#quiz">Self-Test</a></li>
+      </ul>
+    </nav>
+    
+    <!-- GROSS ANATOMY -->
+    <section id="gross" class="filterable">
+      <h2>🔍 Gross Anatomy</h2>
+      
+      <div class="facts-grid">
+        <div class="fact-box">
+          <h4>1.4 kg</h4>
+          <p>Adult liver weight (~3 lb)</p>
+        </div>
+        <div class="fact-box">
+          <h4>Ribs 7-11</h4>
+          <p>Right liver protected by these ribs</p>
+        </div>
+        <div class="fact-box">
+          <h4>Wedge-shaped</h4>
+          <p>Molded by diaphragm & abdominal cavity</p>
+        </div>
+        <div class="fact-box">
+          <h4>2% body weight</h4>
+          <p>Adult liver:body ratio (vs 4-5% in infancy)</p>
+        </div>
+      </div>
+      
+      <h3>📍 Surfaces & Landmarks</h3>
+      <div class="card">
+        <strong>Diaphragmatic (Antero-superior) Surface</strong><br>
+        • Lies below diaphragm; separated by peritoneum<br>
+        • Cardiac impression centrally (heart position)<br>
+        • Majority under right dome of diaphragm
+      </div>
+      <div class="card">
+        <strong>Visceral (Postero-inferior) Surface</strong><br>
+        • Bounded by inferior liver edge<br>
+        • Contains: porta hepatis, gallbladder fossa, fissures for ligamentum teres/venosum<br>
+        • Quadrate lobe (anterior to porta hepatis)<br>
+        • Caudate lobe (posterior to porta hepatis)
+      </div>
+      
+      <h3>⚠️ Bare Area</h3>
+      <div class="card clinical">
+        <strong>Key Facts:</strong><br>
+        • Direct contact with diaphragm; <strong>NO peritoneum</strong><br>
+        • Bounded by coronary ligaments<br>
+        • IVC groove at medial end<br>
+        • <span class="tag clinical">Clinical:</span> Allows direct spread of infection between liver & diaphragm
+      </div>
+    </section>
+    
+    <!-- FUNCTIONAL ANATOMY -->
+    <section id="functional" class="filterable">
+      <h2>⚙️ Functional Anatomy (Couinaud System)</h2>
+      
+      <div class="card discriminator">
+        <strong>Core Concept:</strong> Segments based on <strong>portal vein distribution</strong> (not external landmarks). Each segment has independent vascular inflow, outflow, and biliary drainage.
+      </div>
+      
+      <h3>🗺️ Couinaud Segments Quick Reference</h3>
+      <table>
+        <tr><th>Segment</th><th>Location</th><th>Key Landmark</th></tr>
+        <tr><td><strong>I</strong></td><td>Caudate lobe</td><td>Posterior to porta hepatis; drains into both hepatic ducts</td></tr>
+        <tr><td><strong>II, III</strong></td><td>Left lateral sector</td><td>Left of falciform ligament</td></tr>
+        <tr><td><strong>IV</strong></td><td>Quadrate lobe / Left medial</td><td>Anterior to porta hepatis; bounded by gallbladder fossa</td></tr>
+        <tr><td><strong>V, VIII</strong></td><td>Right anterior sector</td><td>Anterior right lobe</td></tr>
+        <tr><td><strong>VI, VII</strong></td><td>Right posterior sector</td><td>Posterior right lobe</td></tr>
+      </table>
+      
+      <h3>📐 Key Fissures</h3>
+      <details>
+        <summary>Cantlie's Line (Main Portal Fissure)</summary>
+        <div class="details-content">
+          • Extends: midpoint of gallbladder fossa → midpoint of IVC<br>
+          • Contains: <strong>Middle hepatic vein</strong><br>
+          • Separates: Functional right vs left hemi-liver<br>
+          • <span class="tag discriminator">Discriminator:</span> Surgical resection follows this line, NOT falciform ligament
+        </div>
+      </details>
+      
+      <details>
+        <summary>Other Critical Fissures</summary>
+        <div class="details-content">
+          <strong>Left Portal Fissure:</strong> Contains left hepatic vein; divides left hemi-liver<br>
+          <strong>Right Portal Fissure:</strong> Most variable; traverses thickest parenchyma (surgical risk)<br>
+          <strong>Umbilical Fissure:</strong> Contains ligamentum teres + left portal vein branch<br>
+          <strong>Venous Fissure:</strong> Contains ligamentum venosum (obliterated ductus venosus)<br>
+          <strong>Rouvière's Sulcus:</strong> Behind gallbladder fossa; landmark for right posterior pedicle
+        </div>
+      </details>
+    </section>
+    
+    <!-- LIGAMENTS -->
+    <section id="ligaments" class="filterable">
+      <h2>🔗 Ligaments & Supports</h2>
+      
+      <h3>Major Ligaments</h3>
+      <table>
+        <tr><th>Ligament</th><th>Attachments</th><th>Key Content</th></tr>
+        <tr><td><strong>Falciform</strong></td><td>Liver → Anterior abdominal wall</td><td>Ligamentum teres in free margin</td></tr>
+        <tr><td><strong>Coronary</strong></td><td>Liver → Diaphragm</td><td>Forms bare area boundaries; has triangular components</td></tr>
+        <tr><td><strong>Lesser Omentum</strong></td><td>Liver → Stomach + Duodenum</td><td><strong>Hepatoduodenal:</strong> Portal triad<br><strong>Hepatogastric:</strong> Sheet to stomach</td></tr>
+      </table>
+      
+      <div class="card tip">
+        <strong>💡 Mnemonic for Portal Triad (in hepatoduodenal ligament):</strong><br>
+        <strong>D</strong>uct (CBD) - <strong>A</strong>rtery (Hepatic) - <strong>V</strong>ein (Portal)<br>
+        Arranged: Duct (anterior-right), Artery (anterior-left), Vein (posterior)
+      </div>
+      
+      <h3>Support Hierarchy</h3>
+      <div class="card">
+        <strong>Primary:</strong> IVC + Hepatic veins (especially right) — "suspend" liver<br>
+        <strong>Secondary:</strong> Right kidney, hepatic flexure, pancreas/duodenum<br>
+        <strong>Tertiary:</strong> Falciform ligament (minor role)
+      </div>
+    </section>
+    
+    <!-- FUNCTIONS -->
+    <section id="functions" class="filterable">
+      <h2>⚡ Key Liver Functions</h2>
+      
+      <div class="facts-grid">
+        <div class="fact-box" style="background:linear-gradient(135deg,#27ae60,#2ecc71)">
+          <h4>🍬 Glucose</h4>
+          <p>Glycogen storage • Gluconeogenesis • Glycogenolysis</p>
+        </div>
+        <div class="fact-box" style="background:linear-gradient(135deg,#8e44ad,#9b59b6)">
+          <h4>🥩 Protein</h4>
+          <p>Plasma protein synthesis • Deamination → Urea cycle</p>
+        </div>
+        <div class="fact-box" style="background:linear-gradient(135deg,#e67e22,#f39c12)">
+          <h4>🧈 Lipids</h4>
+          <p>Bile salt production • Cholesterol synthesis • Lipoprotein assembly</p>
+        </div>
+        <div class="fact-box" style="background:linear-gradient(135deg,#3498db,#2980b9)">
+          <h4>🛡️ Detox</h4>
+          <p>Drug metabolism • Ammonia → Urea • Bilirubin conjugation</p>
+        </div>
+      </div>
+      
+      <h3>🎯 High-Yield Function Facts</h3>
+      <div class="card">
+        <strong>Bile Production:</strong><br>
+        • Liver makes bile → stored/concentrated in gallbladder<br>
+        • <strong>Bile salts:</strong> Emulsify fats (digestive role)<br>
+        • <strong>Bilirubin:</strong> Excretory pigment from RBC breakdown<br>
+        • Released into duodenum in response to CCK
+      </div>
+      
+      <div class="card clinical">
+        <strong>Storage Functions:</strong><br>
+        • <strong>Fat-soluble vitamins:</strong> A, D, E, K<br>
+        • <strong>Water-soluble:</strong> B₁₂<br>
+        • <strong>Minerals:</strong> Iron (ferritin), Copper<br>
+        • <strong>Energy:</strong> Glycogen (up to 10% liver weight)
+      </div>
+    </section>
+    
+    <!-- GALLBLADDER & BILIARY -->
+    <section id="gallbladder" class="filterable">
+      <h2>🟢 Gallbladder & Biliary Tree</h2>
+      
+      <h3>Gallbladder Essentials</h3>
+      <table>
+        <tr><th>Feature</th><th>Detail</th></tr>
+        <tr><td>Size</td><td>7-10 cm long; 25 mL resting → 50 mL capacity</td></tr>
+        <tr><td>Location</td><td>Visceral surface, between Couinaud segments IV & V</td></tr>
+        <tr><td>Parts</td><td>Fundus • Body • Neck (→ Hartmann's pouch if diseased)</td></tr>
+        <tr><td>Stimulus</td><td><strong>CCK</strong> + vagal stimulation → contraction</td></tr>
+      </table>
+      
+      <h3>🔄 Biliary Tree Flow</h3>
+      <div class="card" style="text-align:center;padding:1.2rem">
+        <strong>Intrahepatic ducts</strong> → Right/Left hepatic ducts → <strong>Common hepatic duct</strong> + Cystic duct → <strong>Common bile duct</strong> → Ampulla of Vater → Duodenum
+      </div>
+      
+      <h3>⚠️ Critical Variations & Pitfalls</h3>
+      <details>
+        <summary>Luschka's Duct (Subvesical Duct)</summary>
+        <div class="details-content">
+          • Small duct from segment V traversing gallbladder fossa<br>
+          • <span class="tag clinical">Clinical:</span> If missed during cholecystectomy → bile leak → biloma<br>
+          • Must be identified and ligated
+        </div>
+      </details>
+      
+      <details>
+        <summary>Cystic Duct Anatomy</summary>
+        <div class="details-content">
+          • Length: 2-4 cm; Diameter: 2-3 mm<br>
+          • Spiral mucosal folds → maintain patency (NOT flow regulation)<br>
+          • Joins common hepatic duct at variable level (usually middle third)<br>
+          • <span class="tag discriminator">Discriminator:</span> Right hepatic duct = short/vertical; Left = longer/horizontal
+        </div>
+      </details>
+      
+      <h3>🔺 Surgical Triangles</h3>
+      <div class="card discriminator">
+        <strong>Calot's Triangle:</strong><br>
+        • Boundaries: Common hepatic duct (base), Cystic duct & artery (sides)<br>
+        • Contains: <strong>Cystic artery</strong> (critical to identify in cholecystectomy)<br>
+        • <span class="tag clinical">Clinical:</span> Misidentification → iatrogenic bile duct injury
+      </div>
+    </section>
+    
+    <!-- CLINICAL -->
+    <section id="clinical" class="filterable">
+      <h2>🏥 Clinical Correlates</h2>
+      
+      <details open>
+        <summary>🩺 High-Yield Clinical Scenarios</summary>
+        <div class="details-content">
+          <div class="card clinical">
+            <strong>Cholecystectomy Effects:</strong><br>
+            • Bile flows continuously (not stored) → less concentrated<br>
+            • Early post-op: <strong>steatorrhea</strong> (fatty stools) due to impaired fat digestion<br>
+            • Usually resolves as bowel adapts
+          </div>
+          
+          <div class="card clinical">
+            <strong>Mirizzi Syndrome:</strong><br>
+            • Gallstone impacted in cystic duct/Hartmann's pouch<br>
+            • Extrinsic compression of common hepatic duct → obstructive jaundice<br>
+            • Risk of bile duct injury during surgery
+          </div>
+          
+          <div class="card clinical">
+            <strong>Courvoisier's Law:</strong><br>
+            • <strong>Painless jaundice + palpable gallbladder</strong> = malignant obstruction (e.g., pancreatic CA)<br>
+            • NOT typical of gallstone disease (gallbladder usually fibrotic/non-distensible)
+          </div>
+          
+          <div class="card clinical">
+            <strong>Porcelain Gallbladder:</strong><br>
+            • Calcification of gallbladder wall<br>
+            • <strong>↑ Risk of gallbladder carcinoma</strong> → prophylactic cholecystectomy often recommended
+          </div>
+          
+          <div class="card clinical">
+            <strong>Bile Duct Injury (Iatrogenic):</strong><br>
+            • Most common during laparoscopic cholecystectomy<br>
+            • Mechanism: Misidentification of CBD as cystic duct<br>
+            • Prevention: Critical view of safety in Calot's triangle
+          </div>
+        </div>
+      </details>
+      
+      <h3>📏 Imaging Clues</h3>
+      <table>
+        <tr><th>Measurement</th><th>Normal</th><th>Abnormal Suggests</th></tr>
+        <tr><td>Common hepatic duct (US)</td><td>< 5 mm</td><td>Distal obstruction (stone, mass)</td></tr>
+        <tr><td>Common bile duct (US)</td><td>≤ 7 mm (<60y); ↑ slightly with age</td><td>Choledocholithiasis, stricture, tumor</td></tr>
+        <tr><td>Liver size (US)</td><td>Craniocaudal < 15.5 cm (midclavicular)</td><td>Hepatomegaly (congestion, infiltration)</td></tr>
+      </table>
+    </section>
+    
+    <!-- QUICK TABLES -->
+    <section id="tables" class="filterable">
+      <h2>📊 Quick Reference Tables</h2>
+      
+      <h3>🔢 Couinaud Segments & Resections</h3>
+      <table>
+        <tr><th>Segments</th><th>Anatomic Term</th><th>Surgical Term</th></tr>
+        <tr><td>V-VIII</td><td>Right liver</td><td>Right hepatectomy</td></tr>
+        <tr><td>II-IV</td><td>Left liver</td><td>Left hepatectomy</td></tr>
+        <tr><td>IV-VIII</td><td>Right trisection</td><td>Extended right hepatectomy</td></tr>
+        <tr><td>II-III</td><td>Left lateral section</td><td>Left lateral sectionectomy</td></tr>
+        <tr><td>Any single</td><td>Segment</td><td>Segmentectomy</td></tr>
+      </table>
+      
+      <h3>🔄 Embryology Remnants</h3>
+      <table>
+        <tr><th>Adult Structure</th><th>Fetal Origin</th><th>Location</th></tr>
+        <tr><td><strong>Ligamentum teres</strong></td><td>Left umbilical vein</td><td>Free edge of falciform ligament</td></tr>
+        <tr><td><strong>Ligamentum venosum</strong></td><td>Ductus venosus</td><td>Fissure between caudate & left lobes</td></tr>
+        <tr><td><strong>Median umbilical ligament</strong></td><td>Urachus</td><td>Anterior abdominal wall (not liver)</td></tr>
+      </table>
+      
+      <h3>🎯 Spatial Relationships (High-Yield)</h3>
+      <table>
+        <tr><th>Structure</th><th>Key Relationship</th></tr>
+        <tr><td>IVC</td><td>Runs in groove of bare area; receives hepatic veins just before diaphragm</td></tr>
+        <tr><td>Gallbladder</td><td>Fossa to RIGHT of quadrate lobe (segment IV)</td></tr>
+        <tr><td>Portal vein</td><td>Posterior to CBD & hepatic artery in hepatoduodenal ligament</td></tr>
+        <tr><td>Retroduodenal CBD</td><td>Posterior to 1st part duodenum; IVC behind it; gastroduodenal artery to left</td></tr>
+        <tr><td>Sphincter of Oddi</td><td>Within duodenal wall; 15-20 mm long; controls bile/pancreatic juice entry</td></tr>
+      </table>
+    </section>
+    
+    <!-- QUIZ -->
+    <section id="quiz" class="filterable">
+      <h2>❓ Self-Test Questions</h2>
+      <p style="margin-bottom:1rem;color:var(--gray)">Click "Show Answer" to check. Great for active recall!</p>
+      
+      <div class="quiz-item">
+        <strong>1.</strong> Cantlie's line connects which two landmarks?
+        <div class="quiz-options">
+          <label><input type="radio" name="q1"> Falciform ligament to IVC</label>
+          <label><input type="radio" name="q1"> Midpoint gallbladder fossa to midpoint IVC</label>
+          <label><input type="radio" name="q1"> Porta hepatis to umbilicus</label>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">Show Answer</button>
+        <div class="quiz-answer">✅ Midpoint of gallbladder fossa to midpoint of IVC. Contains middle hepatic vein; separates functional right/left liver.</div>
+      </div>
+      
+      <div class="quiz-item">
+        <strong>2.</strong> Which Couinaud segment corresponds to the caudate lobe?
+        <div class="quiz-options">
+          <label><input type="radio" name="q2"> Segment I</label>
+          <label><input type="radio" name="q2"> Segment IV</label>
+          <label><input type="radio" name="q2"> Segment VIII</label>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">Show Answer</button>
+        <div class="quiz-answer">✅ Segment I. Unique: drains into both right and left hepatic ducts; has independent blood supply.</div>
+      </div>
+      
+      <div class="quiz-item">
+        <strong>3.</strong> A patient has painless jaundice and a palpable, non-tender gallbladder. What does Courvoisier's law suggest?
+        <div class="quiz-options">
+          <label><input type="radio" name="q3"> Choledocholithiasis</label>
+          <label><input type="radio" name="q3"> Malignant obstruction (e.g., pancreatic cancer)</label>
+          <label><input type="radio" name="q3"> Acute cholecystitis</label>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">Show Answer</button>
+        <div class="quiz-answer">✅ Malignant obstruction. Gallstones typically cause fibrotic, non-distensible gallbladder; malignancy allows dilation.</div>
+      </div>
+      
+      <div class="quiz-item">
+        <strong>4.</strong> During cholecystectomy, failure to ligate which structure can cause post-op bile leak?
+        <div class="quiz-options">
+          <label><input type="radio" name="q4"> Cystic artery</label>
+          <label><input type="radio" name="q4"> Luschka's duct</label>
+          <label><input type="radio" name="q4"> Right hepatic artery</label>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">Show Answer</button>
+        <div class="quiz-answer">✅ Luschka's duct. Small accessory duct from segment V traversing gallbladder fossa; if missed → bile leak → biloma.</div>
+      </div>
+      
+      <div class="quiz-item">
+        <strong>5.</strong> What is the primary functional basis for Couinaud's liver segmentation?
+        <div class="quiz-options">
+          <label><input type="radio" name="q5"> External surface landmarks</label>
+          <label><input type="radio" name="q5"> Distribution of portal venous branches</label>
+          <label><input type="radio" name="q5"> Hepatic vein drainage patterns</label>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">Show Answer</button>
+        <div class="quiz-answer">✅ Distribution of portal venous branches. Each segment has independent portal inflow, hepatic venous outflow, and biliary drainage.</div>
+      </div>
+    </section>
+    
+    <footer style="text-align:center;padding:1.5rem;background:var(--light);color:var(--gray);font-size:0.9rem">
+      <p>🫀 Liver Integrated Reviewer • Based on CM 105 IBS Anatomy • For educational use only</p>
+      <p style="margin-top:0.5rem">💡 Tip: Use Ctrl+F / Cmd+F to search this page for quick review!</p>
+    </footer>
+  </div>
+
+  <script>
+    // Toggle quiz answers
+    function toggleAnswer(btn) {
+      const quizItem = btn.closest('.quiz-item');
+      quizItem.classList.toggle('show-answer');
+      btn.textContent = quizItem.classList.contains('show-answer') ? 'Hide Answer' : 'Show Answer';
+    }
+    
+    // Search/filter content
+    function filterContent() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const sections = document.querySelectorAll('.filterable');
+      
+      sections.forEach(section => {
+        const text = section.textContent.toLowerCase();
+        section.style.display = text.includes(input) ? 'block' : 'none';
+      });
+      
+      // Keep TOC visible
+      document.querySelector('.toc').style.display = 'block';
+      document.querySelector('.search-box').style.display = 'block';
+    }
+    
+    // Auto-open details on search match
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      if (query.length > 2) {
+        document.querySelectorAll('details').forEach(detail => {
+          if (detail.textContent.toLowerCase().includes(query)) {
+            detail.open = true;
+          }
+        });
+      }
+    });
+    
+    // Smooth scroll for TOC links
+    document.querySelectorAll('.toc a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

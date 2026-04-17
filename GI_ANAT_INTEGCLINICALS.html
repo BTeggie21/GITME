@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIT Clinical Collection - Filterable</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #222;
+            font-size: 13px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #1a5276;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        h2 {
+            color: #2874a6;
+            margin: 25px 0 15px 0;
+            padding-left: 12px;
+            border-left: 4px solid #5dade2;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 1.15em;
+        }
+        h3 {
+            color: #2c3e50;
+            margin: 18px 0 10px 0;
+            font-size: 1.05em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 4px;
+        }
+        
+        /* Filter buttons */
+        .filter-container {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9f9;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .filter-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 4px;
+            border: 2px solid #3498db;
+            background-color: white;
+            color: #3498db;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .filter-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .filter-btn.show-all {
+            background-color: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+        .filter-btn.show-all:hover {
+            background-color: #219a52;
+        }
+        
+        /* Clinical condition cards - clean design */
+        .condition {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 14px;
+            margin: 14px 0;
+            transition: all 0.3s;
+        }
+        .condition.hidden {
+            display: none;
+        }
+        .condition:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Tags */
+        .tags {
+            margin: 8px 0;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 500;
+            color: white;
+            background-color: #7f8c8d;
+        }
+        
+        /* Subtle colored boxes */
+        .mechanism {
+            background-color: #f8f9f9;
+            border-left: 4px solid #95a5a6;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .mechanism::before {
+            content: "⚙️ Mechanism: ";
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .anatomy {
+            background-color: #f8f9f9;
+            border-left: 4px solid #95a5a6;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .anatomy::before {
+            content: "🔗 Anatomy Link: ";
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .clinical {
+            background-color: #f8f9f9;
+            border-left: 4px solid #95a5a6;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .clinical::before {
+            content: "📋 Clinical Features: ";
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .trap {
+            background-color: #fdf2f2;
+            border-left: 4px solid #e74c3c;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .trap::before {
+            content: "⚠️ Exam Trap: ";
+            font-weight: 600;
+            color: #c0392b;
+        }
+        
+        .memory {
+            background-color: #f8f9f9;
+            border-left: 4px solid #95a5a6;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            font-style: italic;
+        }
+        .memory::before {
+            content: "💡 Memory Aid: ";
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .redflag {
+            background-color: #fdf2f2;
+            border: 1px solid #e74c3c;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .redflag::before {
+            content: "🚨 Red Flag: ";
+            font-weight: 600;
+            color: #c0392b;
+        }
+        
+        .stats {
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #e8f8f5;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        ul { margin: 8px 0; padding-left: 20px; }
+        li { margin: 4px 0; }
+        strong { color: #2c3e50; }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .filter-container, .stats { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🩺 GIT CLINICAL COLLECTION</h1>
+        <p style="text-align:center; color:#666; margin-bottom:20px; font-style:italic;">
+            Filter by Category | Understanding-Based Approach
+        </p>
+
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <strong style="display:block; margin-bottom:10px; color:#2c3e50;">Filter by Category:</strong>
+            <button class="filter-btn show-all active" onclick="filterItems('all')">Show All</button>
+            <button class="filter-btn" onclick="filterItems('posterior')">Posterior Abdominal</button>
+            <button class="filter-btn" onclick="filterItems('anterior')">Anterior Abdominal</button>
+            <button class="filter-btn" onclick="filterItems('hepatobiliary')">Hepatobiliary</button>
+            <button class="filter-btn" onclick="filterItems('peritoneum')">Peritoneum</button>
+            <div class="stats" id="stats">Showing all items</div>
+        </div>
+
+        <!-- PERITONEUM CONDITIONS -->
+        <h2>🔷 Peritoneum Conditions</h2>
+        
+        <div class="condition" data-category="peritoneum">
+            <h3>Acute Peritonitis</h3>
+            <div class="mechanism">Inflammation of peritoneum from infection or chemical irritation (ruptured appendix, perforated ulcer, trauma)</div>
+            <div class="anatomy">Parietal peritoneum has somatic innervation → sharp, localized pain. Visceral peritoneum has autonomic innervation → dull, poorly localized pain</div>
+            <div class="clinical">Pain 8-10/10, board-like rigidity, rebound tenderness, guarding, fever, nausea/vomiting</div>
+            <div class="trap">Visceral pain (dull, diffuse) comes FIRST, then parietal pain (sharp, localized) when inflammation reaches peritoneum. This explains pain migration in appendicitis!</div>
+            <div class="memory">"Visceral = Vague; Parietal = Precise"</div>
+            <div class="redflag">Surgical emergency: Requires source control + antibiotics. Delay → sepsis → death</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Ascites</h3>
+            <div class="mechanism">Fluid accumulation in peritoneal cavity due to portal hypertension, hypoalbuminemia, or inflammation</div>
+            <div class="anatomy">Peritoneal cavity normally has minimal lubricating fluid. Massive accumulation elevates diaphragm → limits excursion</div>
+            <div class="clinical">Abdominal distension, shifting dullness, fluid wave, dyspnea (elevated diaphragm), early satiety</div>
+            <div class="trap">Ascites is FLUID, not fat. It transilluminates poorly but shows shifting dullness. Don't confuse with obesity!</div>
+            <div class="memory">"Shifting dullness = fluid moves with position change"</div>
+            <div class="redflag">Paracentesis needed for diagnosis. Check SAAG (Serum-Ascites Albumin Gradient) to determine cause</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Volvulus</h3>
+            <div class="mechanism">Twisting of bowel loop around its mesentery → obstruction + vascular compromise → ischemia</div>
+            <div class="anatomy">Mesentery contains blood vessels. Twist = kinked vessels = ischemia. Sigmoid colon most common (long, mobile mesentery)</div>
+            <div class="clinical">Acute abdominal pain, distension, absolute constipation, vomiting. "Coffee bean" sign on X-ray</div>
+            <div class="trap">Volvulus is a SURGICAL EMERGENCY. Time to detorsion = bowel viability. Don't wait for labs!</div>
+            <div class="memory">"Twist = Ischemia = Necrosis = Death if not fixed"</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Peritoneal Carcinomatosis</h3>
+            <div class="mechanism">Cancer seeding throughout peritoneal cavity</div>
+            <div class="anatomy">Primary sources: Ovarian cancer (most common), gastric cancer, colorectal cancer, pancreatic cancer</div>
+            <div class="clinical">"Omental caking" on imaging, ascites, bowel obstruction, weight loss</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Oncology</span>
+            </div>
+        </div>
+
+        <!-- ESOPHAGUS & STOMACH CONDITIONS -->
+        <h2>🔴 Esophagus & Stomach Conditions</h2>
+        
+        <div class="condition" data-category="hepatobiliary">
+            <h3>GERD (Gastroesophageal Reflux Disease)</h3>
+            <div class="mechanism">Failure of lower esophageal sphincter (LES) → gastric acid refluxes into esophagus</div>
+            <div class="anatomy">LES at T10 (esophageal hiatus). Hiatal hernia weakens LES. Esophageal epithelium not designed for acid exposure</div>
+            <div class="clinical">Retrosternal burning (heartburn), regurgitation, worse after meals/lying down, chronic cough</div>
+            <div class="trap">GERD can mimic cardiac pain! Always rule out MI first in patients with chest pain, especially if risk factors present</div>
+            <div class="memory">"GERD = Gastric content Escapes, Refluxes, Damages"</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Esophageal Varices</h3>
+            <div class="mechanism">Portal hypertension → blood shunts via portosystemic anastomosis at lower esophagus</div>
+            <div class="anatomy">Left gastric vein (portal) ↔ Azygos vein (systemic/SVC). Dilated submucosal veins = varices</div>
+            <div class="clinical">Often asymptomatic until rupture → massive hematemesis, hypotension, shock</div>
+            <div class="trap">Don't confuse with Mallory-Weiss tear (mucosal tear from vomiting) or peptic ulcer. Varices = dilated veins from portal HTN</div>
+            <div class="memory">"ERUR: Esophagus, Rectum, Umbilicus, Retroperitoneum = sites of portosystemic shunting"</div>
+            <div class="redflag">EMERGENCY: Mortality up to 20% per bleed. Needs IV octreotide, endoscopic band ligation, possible TIPS</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Barrett's Esophagus vs. Esophageal Varices</h3>
+            <div class="anatomy">Both affect lower esophagus but different mechanisms</div>
+            <div class="clinical">
+                <strong>Barrett's:</strong> Metaplasia (squamous → columnar) from chronic GERD → ↑ adenocarcinoma risk<br>
+                <strong>Varices:</strong> Dilated veins from portal HTN → risk of rupture/hemorrhage
+            </div>
+            <div class="trap">Barrett's = epithelial change (precancerous). Varices = vascular dilation (bleeding risk). Don't mix mechanisms!</div>
+            <div class="memory">"Barrett's = Burned → Barrett's → Cancer; Varices = Veins → Rupture → Bleed"</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Achalasia</h3>
+            <div class="mechanism">Loss of myenteric (Auerbach's) plexus → LES fails to relax → food backs up</div>
+            <div class="anatomy">Myenteric plexus lies between muscle layers. Vagus nerve damage (Chagas, idiopathic) → plexus degeneration</div>
+            <div class="clinical">Dysphagia (solids AND liquids from start), regurgitation of undigested food, chest pain, weight loss</div>
+            <div class="trap">Achalasia affects BOTH solids and liquids from the START (motility disorder). Mechanical obstruction starts with solids only, then progresses</div>
+            <div class="memory">"Bird's beak on barium swallow = Achalasia"</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Peptic Ulcer Disease: Duodenal vs. Gastric</h3>
+            <div class="mechanism">Imbalance: aggressive factors (acid, pepsin) > defensive factors (mucus, prostaglandins)</div>
+            <div class="anatomy">
+                <strong>Duodenal ulcer:</strong> First part of duodenum (foregut), near gastroduodenal artery<br>
+                <strong>Gastric ulcer:</strong> Lesser curvature, near left gastric artery
+            </div>
+            <div class="clinical">
+                <strong>Duodenal:</strong> Pain RELIEVED by food (buffers acid), hunger pain, night pain<br>
+                <strong>Gastric:</strong> Pain WORSENED by food (stimulates acid), weight loss, early satiety
+            </div>
+            <div class="trap">Posterior duodenal ulcer → erodes gastroduodenal artery → MASSIVE hemorrhage (surgical emergency). Anterior ulcer → perforates → peritonitis</div>
+            <div class="memory">"Duodenal = Dinner helps; Gastric = Food aggravates"</div>
+            <div class="redflag">Alarm symptoms: weight loss, anemia, dysphagia, vomiting, GI bleed, age >55 → need endoscopy to rule out cancer!</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Gastric Cancer: Lymphatic Spread</h3>
+            <div class="mechanism">Adenocarcinoma from chronic gastritis → atrophy → metaplasia → dysplasia</div>
+            <div class="anatomy">Stomach lymph → gastric/gastroepiploic nodes → celiac nodes → thoracic duct → left supraclavicular</div>
+            <div class="clinical">Often presents late: weight loss, early satiety, anemia, epigastric pain. May have Virchow's node or Sister Mary Joseph nodule</div>
+            <div class="trap">Gastric cancer often SILENT early! Any change in bowel habits + anemia in >50 y/o = colonoscopy. Don't dismiss vague symptoms</div>
+            <div class="memory">"Virchow's node = Left supraclavicular = Gastric CA metastasis via thoracic duct"</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Oncology</span>
+            </div>
+        </div>
+
+        <!-- LIVER & GALLBLADDER CONDITIONS -->
+        <h2>🟤 Liver & Gallbladder Conditions</h2>
+        
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Acute Cholecystitis</h3>
+            <div class="mechanism">Cystic duct obstruction (gallstone) → bile stasis → inflammation ± infection</div>
+            <div class="anatomy">Gallbladder in fossa between liver segments IV & V. Inflammation irritates parietal peritoneum → localized RUQ pain</div>
+            <div class="clinical">RUQ pain (constant, not colicky), fever, nausea/vomiting, positive Murphy's sign (inspiratory arrest during RUQ palpation)</div>
+            <div class="trap">Gallbladder pain referral: Visceral pain (epigastric/RUQ, T7-T9) → parietal pain (localized RUQ) → referred pain (right scapula via phrenic C3-C5)</div>
+            <div class="memory">"Murphy's sign = inspiratory arrest during RUQ palpation = cholecystitis"</div>
+            <div class="redflag">Complications: gangrene, perforation, empyema, gallstone ileus. Needs urgent cholecystectomy</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Cystic Artery Variations: Surgical Trap</h3>
+            <div class="anatomy">Cystic artery usually from right hepatic artery (75%), but 25-50% have variations: hepatic artery proper, gastroduodenal, left hepatic, multiple arteries</div>
+            <div class="clinical">During cholecystectomy, misidentifying cystic artery → bleeding or bile duct injury. Calot's triangle must be cleared before clipping</div>
+            <div class="trap">"Cystic artery always from right hepatic" → FALSE. 25-50% have variations. Always confirm anatomy before clipping!</div>
+            <div class="memory">"Calot's triangle: Cystic duct + Common hepatic duct + Liver edge = Cystic artery inside"</div>
+            <div class="redflag">Bile duct injury = catastrophic complication. "Critical view of safety" required before clipping any structure</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Surgical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Budd-Chiari Syndrome vs. Portal Hypertension</h3>
+            <div class="mechanism">
+                <strong>Budd-Chiari:</strong> Hepatic vein thrombosis → hepatic outflow obstruction<br>
+                <strong>Portal HTN:</strong> Portal vein obstruction → portal inflow problem
+            </div>
+            <div class="anatomy">
+                <strong>Budd-Chiari:</strong> Hepatic veins drain liver → IVC<br>
+                <strong>Portal HTN:</strong> Portal vein brings GI blood → liver
+            </div>
+            <div class="clinical">
+                <strong>Budd-Chiari:</strong> Painful hepatomegaly, ascites, acute liver failure<br>
+                <strong>Portal HTN:</strong> Ascites, varices, splenomegaly, caput medusae
+            </div>
+            <div class="trap">Both cause ascites → but different mechanisms! Budd-Chiari = hepatic VEIN thrombosis (hypercoagulable states). Portal HTN = liver cirrhosis</div>
+            <div class="memory">"Budd-Chiari = Backed-up liver veins; Portal HTN = Pressured portal vein"</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <!-- PANCREAS CONDITIONS -->
+        <h2>🟢 Pancreas Conditions</h2>
+        
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Acute Pancreatitis: Why Back Pain?</h3>
+            <div class="mechanism">Premature activation of pancreatic enzymes → autodigestion → inflammation</div>
+            <div class="anatomy">Pancreas is retroperitoneal (behind peritoneum). Inflammation irritates posterior abdominal wall → pain refers to back (T10-L1)</div>
+            <div class="clinical">Severe epigastric pain RADIATING to back, nausea/vomiting, worse after eating. Amylase/lipase >3x upper limit</div>
+            <div class="trap">Back pain is KEY! Pancreas is retroperitoneal → inflammation irritates posterior abdominal wall → pain refers to back. Don't miss this!</div>
+            <div class="memory">"SAD PUCKER = Retroperitoneal organs (Suprarenals, Aorta/IVC, Duodenum 2-4, Pancreas except tail, Ureters, Colon ascending/descending, Kidneys, Esophagus, Rectum)"</div>
+            <div class="redflag">Severe signs: Cullen's sign (periumbilical ecchymosis), Grey-Turner sign (flank ecchymosis) = hemorrhagic pancreatitis</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Whipple Procedure: Why Remove Duodenum?</h3>
+            <div class="mechanism">Pancreatic head cancer → resection needed</div>
+            <div class="anatomy">Blood supply to duodenum (gastroduodenal + inferior pancreaticoduodenal arteries) passes THROUGH pancreatic head. Remove head → devascularize duodenum → must remove both</div>
+            <div class="trap">"Duodenum has independent blood supply" → FALSE. 2nd part has dual supply (celiac + SMA), but both run through pancreatic head. Can't preserve duodenum if head is removed</div>
+            <div class="memory">"Pancreatic head = duodenal blood highway" → block the highway → duodenum dies</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Surgical</span>
+            </div>
+        </div>
+
+        <!-- SMALL INTESTINE CONDITIONS -->
+        <h2>🔵 Small Intestine Conditions</h2>
+        
+        <div class="condition" data-category="peritoneum">
+            <h3>Small Bowel Obstruction (SBO)</h3>
+            <div class="mechanism">Mechanical blockage of small intestine</div>
+            <div class="anatomy">Adhesions (most common - post-surgical), hernias, malignancy, Crohn's disease, volvulus</div>
+            <div class="clinical">Colicky periumbilical pain (midgut T10), vomiting (bilious if proximal), distension, absolute constipation. High-pitched "tinkling" bowel sounds early</div>
+            <div class="trap">Pain pattern: Periumbilical (visceral, midgut T10) → localized if parietal peritoneum involved. Bilious vomiting = obstruction distal to ampulla of Vater</div>
+            <div class="memory">"SBO = Small = Soon vomiting, Small distension, Soon pain"</div>
+            <div class="redflag">Strangulation signs: Constant pain (not colicky), fever, tachycardia, peritonitis → SURGICAL EMERGENCY</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Meckel's Diverticulum: Rule of 2s</h3>
+            <div class="mechanism">Remnant of vitelline (omphalomesenteric) duct</div>
+            <div class="anatomy">Located in ILEUM (midgut), 2 feet from ileocecal valve. May contain ectopic gastric/pancreatic tissue</div>
+            <div class="clinical">Rule of 2s: 2% of population, 2 feet from ileocecal valve, 2 inches long, presents before age 2, 2 types of ectopic tissue</div>
+            <div class="trap">Meckel's is in the ILEUM (midgut), NOT colon. It's the MOST COMMON congenital GI anomaly. Technetium-99m pertechnetate scan detects gastric mucosa</div>
+            <div class="memory">"Meckel's = Midgut, 2 feet from ICV, 2 tissues (gastric/pancreatic), bleeds from acid"</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Congenital</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Crohn's Disease vs. Ulcerative Colitis</h3>
+            <div class="mechanism">
+                <strong>Crohn's:</strong> Transmural inflammation from immune dysregulation<br>
+                <strong>UC:</strong> Mucosal inflammation limited to colon
+            </div>
+            <div class="anatomy">
+                <strong>Crohn's:</strong> Can affect ANY part of GI tract (mouth to anus), terminal ileum most common, "skip lesions"<br>
+                <strong>UC:</strong> Continuous inflammation, colon only, no granulomas
+            </div>
+            <div class="clinical">
+                <strong>Crohn's:</strong> Fistulas, strictures, abscesses, malabsorption (B12 deficiency if terminal ileum)<br>
+                <strong>UC:</strong> Bloody diarrhea, urgency, tenesmus, ↑ colon cancer risk
+            </div>
+            <div class="trap">Crohn's vs UC: Crohn's = transmural, skip lesions, any location, granulomas, fistulas. UC = mucosal only, continuous, colon only, no granulomas, no fistulas</div>
+            <div class="memory">"Crohn's = Can Reach Anywhere; UC = Only Colon"</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <!-- LARGE INTESTINE CONDITIONS -->
+        <h2>🟣 Large Intestine Conditions</h2>
+        
+        <div class="condition" data-category="peritoneum">
+            <h3>Acute Appendicitis: Pain Migration Explained</h3>
+            <div class="mechanism">Luminal obstruction (fecalith, lymphoid hyperplasia) → increased pressure → ischemia → bacterial overgrowth → inflammation</div>
+            <div class="anatomy">
+                <strong>Phase 1 (Visceral pain):</strong> Appendix inflammation → midgut visceral afferents (T10) → periumbilical pain<br>
+                <strong>Phase 2 (Somatic pain):</strong> Inflammation reaches parietal peritoneum → somatic nerves (T12-L1) → localized RLQ pain at McBurney's point
+            </div>
+            <div class="clinical">Classic migration: periumbilical pain (visceral) → RLQ pain at McBurney's point (parietal). Fever, nausea, anorexia</div>
+            <div class="trap">Appendicitis is one of FEW diagnoses made by history + physical alone! BUT presentation can be atypical in: elderly, pregnant women, children, immunocompromised</div>
+            <div class="memory">"McBurney's point = 2/3 from umbilicus to ASIS = classic appendicitis tenderness"</div>
+            <div class="redflag">Perforation: Sudden pain relief → diffuse peritonitis → sepsis. Time is critical!</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Diverticulosis vs. Diverticulitis</h3>
+            <div class="mechanism">
+                <strong>Diverticulosis:</strong> Mucosal herniation through muscularis propria at weak points (vasa recta penetration)<br>
+                <strong>Diverticulitis:</strong> Inflamed/infected diverticula
+            </div>
+            <div class="anatomy">Most common site: Sigmoid colon (highest intraluminal pressure)</div>
+            <div class="clinical">
+                <strong>Diverticulosis:</strong> Asymptomatic outpouchings, may cause painless hematochezia<br>
+                <strong>Diverticulitis:</strong> LLQ pain, fever, leukocytosis, change in bowel habits
+            </div>
+            <div class="trap">Diverticulosis (asymptomatic) ≠ Diverticulitis (inflamed). Diverticulosis can cause painless hematochezia. Diverticulitis causes painful LLQ symptoms</div>
+            <div class="memory">"Diverticulosis = Dimples; Diverticulitis = Inflamed Dimples = Pain"</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Colorectal Cancer: Right vs. Left-Sided</h3>
+            <div class="mechanism">Adenoma → carcinoma sequence (APC → KRAS → p53 mutations)</div>
+            <div class="anatomy">
+                <strong>Right-sided (cecum/ascending):</strong> Exophytic growth, wider lumen, liquid contents → late presentation<br>
+                <strong>Left-sided (descending/sigmoid):</strong> Annular/"napkin ring" growth, narrower lumen, solid contents → early obstruction
+            </div>
+            <div class="clinical">
+                <strong>Right:</strong> Anemia, vague pain, weight loss, late presentation<br>
+                <strong>Left:</strong> Change in bowel habits, hematochezia, obstruction, early symptoms
+            </div>
+            <div class="trap">Colorectal cancer often SILENT early! Screening colonoscopy saves lives. Any change in bowel habits + anemia in >50 y/o = colonoscopy!</div>
+            <div class="memory">"Right = RBC loss (anemia); Left = Lumen narrowing (obstruction)"</div>
+            <div class="redflag">Metastasis: Liver (portal drainage), lungs, peritoneum. CEA for monitoring</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Oncology</span>
+            </div>
+        </div>
+
+        <!-- RECTUM & ANUS CONDITIONS -->
+        <h2>⚫ Rectum & Anus Conditions</h2>
+        
+        <div class="condition" data-category="peritoneum">
+            <h3>Hemorrhoids: Internal vs. External</h3>
+            <div class="mechanism">Dilated venous plexus from increased pressure (constipation, pregnancy, portal HTN)</div>
+            <div class="anatomy">
+                <strong>Internal (above pectinate line):</strong> Visceral innervation (painless), portal drainage, internal iliac nodes<br>
+                <strong>External (below pectinate line):</strong> Somatic innervation (painful), systemic drainage, inguinal nodes
+            </div>
+            <div class="clinical">
+                <strong>Internal:</strong> Painless bleeding, prolapse<br>
+                <strong>External:</strong> Painful, thrombosis, itching
+            </div>
+            <div class="trap">Pectinate line is KEY! Above = visceral innervation (painless), portal drainage, internal iliac nodes. Below = somatic innervation (painful), systemic drainage, inguinal nodes</div>
+            <div class="memory">"Internal = Invisible pain; External = Excruciating"</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="peritoneum">
+            <h3>Anal Fissure</h3>
+            <div class="mechanism">Tear in anoderm (below pectinate line) from trauma (hard stool, childbirth)</div>
+            <div class="anatomy">Location: Posterior midline (90%), anterior midline (10%), lateral = think Crohn's/TB/malignancy</div>
+            <div class="clinical">Classic triad: Severe pain with defecation, bright red bleeding, constipation (vicious cycle)</div>
+            <div class="trap">Fissure = EXCRUCIATING pain (somatic innervation below pectinate line). Hemorrhoids = painless (internal) or painful only if thrombosed (external)</div>
+            <div class="memory">"Fissure = Feels like fire with every BM"</div>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <!-- HERNIAS -->
+        <h2>🔺 Hernias</h2>
+        
+        <div class="condition" data-category="anterior">
+            <h3>Indirect vs. Direct Inguinal Hernia</h3>
+            <div class="mechanism">
+                <strong>Indirect:</strong> Persistent processus vaginalis (congenital)<br>
+                <strong>Direct:</strong> Acquired weakness of posterior inguinal canal wall (Hesselbach's triangle)
+            </div>
+            <div class="anatomy">
+                <strong>Indirect:</strong> LATERAL to inferior epigastric artery, through deep inguinal ring, follows spermatic cord<br>
+                <strong>Direct:</strong> MEDIAL to inferior epigastric artery, through Hesselbach's triangle, does NOT follow testicular descent
+            </div>
+            <div class="clinical">
+                <strong>Indirect:</strong> More common, M>F (86% male), more common on RIGHT, children/young adults<br>
+                <strong>Direct:</strong> Older men with weak abdominal muscles, rare in women
+            </div>
+            <div class="trap">Clinical test: Reduce hernia, press deep inguinal ring, patient coughs: NO bulge = indirect. Bulge = direct</div>
+            <div class="memory">"Indirect = In the canal (follows cord); Direct = Directly through wall (Hesselbach's)"</div>
+            <div class="tags">
+                <span class="tag">Anterior</span>
+                <span class="tag">Surgical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="anterior">
+            <h3>Femoral Hernia: High Strangulation Risk</h3>
+            <div class="mechanism">Herniation through femoral canal (below inguinal ligament)</div>
+            <div class="anatomy">Below inguinal ligament, through femoral ring, medial to femoral vein. Bounded by femoral vein laterally, lacunar ligament medially</div>
+            <div class="clinical">More common in WOMEN (wider pelvis), but overall less common than inguinal. Presents as mass below and lateral to pubic tubercle</div>
+            <div class="trap">Location: BELOW and LATERAL to pubic tubercle (inguinal hernia = above and medial). Femoral hernias have HIGHEST strangulation rate due to sharp, rigid boundaries of femoral ring</div>
+            <div class="memory">"Femoral = Female, Below, Bad (high strangulation risk)"</div>
+            <div class="redflag">Strangulation risk: Sharp, rigid boundaries of femoral ring (especially lacunar ligament) → vascular compromise → necrosis</div>
+            <div class="tags">
+                <span class="tag">Anterior</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <!-- POSTERIOR ABDOMINAL WALL CONDITIONS -->
+        <h2>⚫ Posterior Abdominal Wall Conditions</h2>
+        
+        <div class="condition" data-category="posterior">
+            <h3>Abdominal Aortic Aneurysm (AAA)</h3>
+            <div class="mechanism">Atherosclerotic weakening → dilation (>3 cm)</div>
+            <div class="anatomy">Aorta enters at T12, bifurcates at L4. Retroperitoneal, anterior to vertebral column</div>
+            <div class="clinical">Often asymptomatic until rupture. Classic triad (ruptured): pulsatile abdominal mass, back/flank pain, hypotension</div>
+            <div class="trap">AAA bifurcates at L4 ("Four"). Palpate at umbilicus level. Screening ultrasound for men 65-75 who ever smoked</div>
+            <div class="memory">"AAA = Aorta At L4, Aneurysm At risk"</div>
+            <div class="redflag">Rupture = 100% MORTALITY without surgery! Back pain because retroperitoneal, anterior to vertebral column</div>
+            <div class="tags">
+                <span class="tag">Posterior</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="posterior">
+            <h3>Psoas Abscess: Why Thigh Pain?</h3>
+            <div class="mechanism">Infection tracking along psoas sheath (vertebral TB, Crohn's, appendicitis, hematogenous)</div>
+            <div class="anatomy">Psoas major originates on lumbar vertebrae, inserts on lesser trochanter. Genitofemoral nerve (L1-L2) runs on psoas surface</div>
+            <div class="clinical">Fever, back pain, pain radiating to thigh/groin (genitofemoral nerve), limp, positive psoas sign (pain on hip extension)</div>
+            <div class="trap">Psoas sign = pain on passive hip extension. Suggests retrocecal appendicitis OR psoas abscess. Don't assume appendicitis only!</div>
+            <div class="memory">"Psoas = Pain on extension = Pus or Appendix"</div>
+            <div class="tags">
+                <span class="tag">Posterior</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="posterior">
+            <h3>Meralgia Paresthetica: Nerve Compression</h3>
+            <div class="mechanism">Compression of lateral femoral cutaneous nerve (L2-L3) under inguinal ligament near ASIS</div>
+            <div class="anatomy">Purely SENSORY nerve to lateral thigh. Passes under inguinal ligament near ASIS</div>
+            <div class="clinical">Burning, tingling, numbness over lateral thigh, NO motor deficit. Risk factors: tight belts, obesity, pregnancy, tool belts</div>
+            <div class="trap">Lateral femoral cutaneous nerve is PURELY SENSORY → no motor weakness! Don't confuse with femoral nerve injury (motor to quadriceps)</div>
+            <div class="memory">"Meralgia = Medial belt → Lateral thigh numbness"</div>
+            <div class="tags">
+                <span class="tag">Posterior</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <!-- CONGENITAL ANOMALIES -->
+        <h2>👶 Congenital Anomalies</h2>
+        
+        <div class="condition" data-category="anterior">
+            <h3>Omphalocele vs. Gastroschisis</h3>
+            <div class="mechanism">
+                <strong>Omphalocele:</strong> Failure of midgut to return to abdominal cavity after physiologic herniation<br>
+                <strong>Gastroschisis:</strong> Abdominal wall defect (usually right of umbilicus)
+            </div>
+            <div class="anatomy">
+                <strong>Omphalocele:</strong> Bowel herniation through umbilicus COVERED by membrane (peritoneum + amnion)<br>
+                <strong>Gastroschisis:</strong> Exposed bowel WITHOUT covering sac, paraumbilical location
+            </div>
+            <div class="clinical">
+                <strong>Omphalocele:</strong> Associated with cardiac defects, chromosomal abnormalities (Trisomy 13, 18, 21)<br>
+                <strong>Gastroschisis:</strong> NOT associated with chromosomal abnormalities. Younger mothers. Bowel damaged by amniotic fluid exposure
+            </div>
+            <div class="trap">Omphalocele = COVERED by sac. Gastroschisis = NO sac (direct exposure). Don't confuse!</div>
+            <div class="memory">"Omphalocele = Outside but Covered; Gastroschisis = Gut Showing, No Sac"</div>
+            <div class="tags">
+                <span class="tag">Anterior</span>
+                <span class="tag">Congenital</span>
+            </div>
+        </div>
+
+        <div class="condition" data-category="anterior">
+            <h3>Hirschsprung's Disease</h3>
+            <div class="mechanism">Failure of neural crest cell migration → absence of enteric ganglia in distal colon</div>
+            <div class="anatomy">Aganglionic segment → tonic contraction → functional obstruction. Rectosigmoid most common</div>
+            <div class="clinical">Newborn failure to pass meconium >48h, abdominal distension, bilious vomiting. Can present later with chronic constipation</div>
+            <div class="trap">Hirschsprung's = NEURAL CREST defect (NOT abdominal wall). Rectal biopsy showing absence of ganglion cells = diagnostic</div>
+            <div class="memory">"Hirschsprung's = No ganglia = No go (obstruction)"</div>
+            <div class="tags">
+                <span class="tag">Anterior</span>
+                <span class="tag">Congenital</span>
+            </div>
+        </div>
+
+        <!-- PORTAL HYPERTENSION -->
+        <h2>🔺 Portal Hypertension Complications</h2>
+        
+        <div class="condition" data-category="hepatobiliary">
+            <h3>Portosystemic Anastomoses (ERUR)</h3>
+            <div class="mechanism">Portal HTN → blood shunts to systemic veins → varices</div>
+            <div class="anatomy">
+                <strong>Esophagus:</strong> Left gastric vein (portal) ↔ Azygos vein (systemic)<br>
+                <strong>Rectum:</strong> Superior rectal (portal) ↔ Middle/inferior rectal (systemic)<br>
+                <strong>Umbilicus:</strong> Paraumbilical veins (portal) ↔ Superficial epigastric (systemic)<br>
+                <strong>Retroperitoneum:</strong> Veins of Retzius (portal) ↔ Lumbar/renal veins (systemic)
+            </div>
+            <div class="clinical">Esophageal varices (hematemesis), hemorrhoids, caput medusae, retroperitoneal varices</div>
+            <div class="trap">Esophageal varices = most dangerous (massive bleed, 20% mortality). Don't miss this in cirrhotic patient with hematemesis!</div>
+            <div class="memory">"ERUR: Esophagus, Rectum, Umbilicus, Retroperitoneum = 'When portal pressure's high, these veins will lie!'"</div>
+            <div class="redflag">Esophageal variceal bleed = EMERGENCY. Needs IV octreotide, endoscopic band ligation, possible TIPS</div>
+            <div class="tags">
+                <span class="tag">Hepatobiliary</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+
+        <!-- MASTER PATTERNS -->
+        <div class="condition" data-category="peritoneum" style="border-color: #5dade2; background-color: #f8f9f9;">
+            <h3 style="color: #1a5276;">🎯 MASTER CLINICAL PATTERNS TO RECOGNIZE</h3>
+            
+            <strong>Pain Migration Patterns:</strong>
+            <ul>
+                <li><strong>Appendicitis:</strong> Periumbilical (visceral T10) → RLQ (parietal)</li>
+                <li><strong>Cholecystitis:</strong> Epigastric (visceral T7-T9) → RUQ (parietal) → Right scapula (phrenic C3-C5)</li>
+                <li><strong>Pancreatitis:</strong> Epigastric → Back (retroperitoneal T10-L1)</li>
+            </ul>
+            
+            <strong>Bleeding Patterns:</strong>
+            <ul>
+                <li><strong>Hematemesis:</strong> Esophageal varices (portal HTN), PUD, Mallory-Weiss</li>
+                <li><strong>Hematochezia:</strong> Hemorrhoids, diverticulosis, colorectal CA (left-sided), IBD</li>
+                <li><strong>Melena:</strong> Upper GI bleed (PUD, varices, gastritis)</li>
+            </ul>
+            
+            <strong>Obstruction Patterns:</strong>
+            <ul>
+                <li><strong>SBO:</strong> Early bilious vomiting, colicky periumbilical pain, distension</li>
+                <li><strong>LBO:</strong> Late feculent vomiting, hypogastric pain, prominent distension, obstipation</li>
+            </ul>
+            
+            <strong>Portal Hypertension Signs:</strong>
+            <ul>
+                <li><strong>Varices:</strong> Esophageal (hematemesis), rectal (hemorrhoids)</li>
+                <li><strong>Caput medusae:</strong> Dilated periumbilical veins</li>
+                <li><strong>Ascites:</strong> Shifting dullness, fluid wave</li>
+                <li><strong>Splenomegaly:</strong> Hypersplenism</li>
+            </ul>
+            <div class="tags">
+                <span class="tag">Peritoneum</span>
+                <span class="tag">Clinical</span>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:30px; padding:15px; background-color:#f8f9f9; border-radius:6px; border:1px solid #ddd;">
+            <p style="font-size:12px; margin:0;"><strong>💬 Final Word:</strong></p>
+            <p style="font-size:11px; margin:8px 0 0 0;">You don't need to memorize every detail. Recognize the PATTERNS.<br>
+            <strong>Anatomy → Mechanism → Clinical presentation → Diagnosis.</strong><br>
+            One pattern, one patient, one win at a time. 💪🩺</p>
+        </div>
+
+    </div>
+
+    <script>
+        function filterItems(category) {
+            // Update active button
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.classList.contains('show-all'))) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter items
+            const items = document.querySelectorAll('.condition');
+            let visibleCount = 0;
+            
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    const itemCategories = item.getAttribute('data-category');
+                    if (itemCategories && itemCategories.includes(category)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                }
+            });
+            
+            // Update stats
+            const stats = document.getElementById('stats');
+            const total = items.length;
+            if (category === 'all') {
+                stats.textContent = `Showing all ${total} items`;
+            } else {
+                const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+                stats.textContent = `Showing ${visibleCount} of ${total} items (${categoryName})`;
+            }
+        }
+    </script>
+</body>
+</html>

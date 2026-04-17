@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated GI Anatomy Study System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-left: 6px solid #3498db;
+            padding-left: 15px;
+            background-color: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 25px;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #2980b9;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            vertical-align: top;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s;
+        }
+        .problem-solution {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .problem-solution h3 {
+            color: white;
+            border-bottom: 2px solid white;
+        }
+        .framework-box {
+            background-color: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .pattern-box {
+            background-color: #d1ecf1;
+            border-left: 6px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .clinical-box {
+            background-color: #f8d7da;
+            border-left: 6px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .mnemonic-box {
+            background-color: #d4edda;
+            border-left: 6px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        .organ-card {
+            background-color: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .organ-card h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .layer {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .layer-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .warning {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #c62828;
+            margin: 15px 0;
+        }
+        .tip {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #2e7d32;
+            margin: 15px 0;
+        }
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 INTEGRATED GI ANATOMY STUDY SYSTEM</h1>
+        <p style="text-align: center; font-style: italic; color: #7f8c8d;">For students who "know it but can't recall it" — Pattern-based, clinically-anchored, memory-optimized</p>
+
+        <!-- CORE PROBLEM & SOLUTION -->
+        <div class="problem-solution">
+            <h2>🔑 THE CORE PROBLEM & SOLUTION</h2>
+            <h3>❌ Isolated Facts Approach (What you're doing now):</h3>
+            <ul>
+                <li>"I memorized the cystic artery comes from the right hepatic... but now I forget if it's the gallbladder or liver..."</li>
+                <li>Facts get "diffused" in your brain</li>
+                <li>Confusion when recalling even though you "know it"</li>
+            </ul>
+            
+            <h3>✅ Integrated Pattern Approach (What we'll do):</h3>
+            <ul>
+                <li>"Foregut organs → celiac trunk → vagus → T5-T9 sympathetic → epigastric pain → portal drainage → celiac nodes"</li>
+                <li><strong>Your brain doesn't store facts—it stores connections.</strong> Let's build those connections intentionally.</li>
+            </ul>
+        </div>
+
+        <!-- 5-LAYER FRAMEWORK -->
+        <h2>🗺️ MASTER FRAMEWORK: THE "5-LAYER GI MAP"</h2>
+        <div class="framework-box">
+            <p><strong>For EVERY abdominal organ, ask these 5 questions in order:</strong></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Layer</th>
+                    <th>Question</th>
+                    <th>Why It Matters</th>
+                    <th>Example: Gallbladder</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1️⃣ LOCATION</strong></td>
+                    <td>Where is it? (quadrant/region, peritoneal status)</td>
+                    <td>Guides physical exam, imaging interpretation, surgical approach</td>
+                    <td>RUQ, visceral surface of liver, between segments IV & V</td>
+                </tr>
+                <tr>
+                    <td><strong>2️⃣ SUPPLY</strong></td>
+                    <td>Artery? Vein? Lymph?</td>
+                    <td>Predicts ischemia patterns, metastasis routes, portal HTN effects</td>
+                    <td>Cystic artery (right hepatic), portal drainage, cystic nodes (Calot's triangle)</td>
+                </tr>
+                <tr>
+                    <td><strong>3️⃣ NERVE</strong></td>
+                    <td>Parasympathetic? Sympathetic? Sensory?</td>
+                    <td>Explains pain referral, motility disorders, surgical complications</td>
+                    <td>Vagus (stimulates), T7-T9 sympathetic (inhibits), referred to RUQ/right scapula</td>
+                </tr>
+                <tr>
+                    <td><strong>4️⃣ FUNCTION</strong></td>
+                    <td>What does it DO?</td>
+                    <td>Links anatomy to physiology → clinical reasoning</td>
+                    <td>Stores & concentrates bile, releases with CCK/fatty meals</td>
+                </tr>
+                <tr>
+                    <td><strong>5️⃣ CLINICAL</strong></td>
+                    <td>What breaks here?</td>
+                    <td>Anchors facts to real cases → long-term retention</td>
+                    <td>Cholecystitis, cholecystectomy, Calot's triangle danger</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tip">
+            <strong>💡 Study hack:</strong> When reviewing any organ, verbally walk through all 5 layers. If you skip one, your brain flags it as "incomplete."
+        </div>
+
+        <!-- FOREGUT/MIDGUT/HINDGUT -->
+        <h2>🎯 PATTERN #1: FOREGUT / MIDGUT / HINDGUT (THE MASTER KEY)</h2>
+        <div class="pattern-box">
+            <p><strong>🧠 MEMORIZE THIS ONCE → UNLOCK 80% OF GI ANATOMY</strong></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>FOREGUT</th>
+                    <th>MIDGUT</th>
+                    <th>HINDGUT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Artery</strong></td>
+                    <td>Celiac Trunk</td>
+                    <td>Superior Mesenteric (SMA)</td>
+                    <td>Inferior Mesenteric (IMA)</td>
+                </tr>
+                <tr>
+                    <td><strong>Sympathetic Levels</strong></td>
+                    <td>T5-T9</td>
+                    <td>T9-T12</td>
+                    <td>L1-L2</td>
+                </tr>
+                <tr>
+                    <td><strong>Parasympathetic</strong></td>
+                    <td>Vagus (CN X)</td>
+                    <td>Vagus (CN X)</td>
+                    <td>Pelvic Splanchnic (S2-S4)</td>
+                </tr>
+                <tr>
+                    <td><strong>Referred Pain</strong></td>
+                    <td>Epigastric</td>
+                    <td>Periumbilical (T10)</td>
+                    <td>Hypogastric/Suprapubic</td>
+                </tr>
+                <tr>
+                    <td><strong>Structures</strong></td>
+                    <td>Esophagus (abdominal), Stomach, Duodenum (1st-2nd), Liver, Gallbladder, Pancreas (head/body), Spleen</td>
+                    <td>Duodenum (3rd-4th), Jejunum, Ileum, Cecum, Appendix, Ascending colon, Proximal 2/3 transverse colon</td>
+                    <td>Distal 1/3 transverse colon, Descending colon, Sigmoid, Rectum, Upper anal canal</td>
+                </tr>
+                <tr>
+                    <td><strong>Lymph Nodes</strong></td>
+                    <td>Celiac nodes</td>
+                    <td>Superior mesenteric nodes</td>
+                    <td>Inferior mesenteric nodes</td>
+                </tr>
+                <tr>
+                    <td><strong>Clinical Examples</strong></td>
+                    <td>PUD, cholecystitis, esophageal varices</td>
+                    <td>Appendicitis, SMA syndrome, midgut volvulus, Crohn's</td>
+                    <td>Diverticulitis, colorectal CA, hemorrhoids</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mnemonic-box">
+            <strong>💡 Active Recall Prompt:</strong> "A patient has periumbilical pain that migrates to RLQ. Which gut division? Which artery? Which nodes?"<br>
+            <strong>🎯 Answer:</strong> Midgut → SMA → Superior mesenteric nodes → Appendicitis
+        </div>
+
+        <!-- PORTOSYSTEMIC ANASTOMOSES -->
+        <h2>🔄 PATTERN #2: PORTOSYSTEMIC ANASTOMOSES (THE "4 SITES" RULE)</h2>
+        <div class="clinical-box">
+            <p><strong>🧠 When portal pressure ↑ → blood shunts to systemic veins → VARICES</strong></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Site</th>
+                    <th>Portal Vein Connection</th>
+                    <th>Systemic Vein Connection</th>
+                    <th>Clinical Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Esophagus</strong><br>(lower 1/3)</td>
+                    <td>Left gastric vein</td>
+                    <td>Azygos vein → SVC</td>
+                    <td>Esophageal varices<br>(massive hematemesis in cirrhosis)</td>
+                </tr>
+                <tr>
+                    <td><strong>Rectum</strong><br>(pectinate line)</td>
+                    <td>Superior rectal vein (IMA)</td>
+                    <td>Middle/Inferior rectal → Internal iliac</td>
+                    <td>Hemorrhoids<br>(internal = painless, external = painful)</td>
+                </tr>
+                <tr>
+                    <td><strong>Umbilicus</strong></td>
+                    <td>Paraumbilical veins</td>
+                    <td>Superficial epigastric → Femoral</td>
+                    <td>Caput medusae<br>(dilated periumbilical veins)</td>
+                </tr>
+                <tr>
+                    <td><strong>Retroperitoneum</strong></td>
+                    <td>Veins of Retzius</td>
+                    <td>Lumbar/Renal veins</td>
+                    <td>Retroperitoneal varices</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mnemonic-box">
+            <strong>💡 Mnemonic:</strong> <span class="highlight">ERUR</span> → "<strong>E</strong>sophagus, <strong>R</strong>ectum, <strong>U</strong>mbilicus, <strong>R</strong>etroperitoneum"<br>
+            <strong>💡 Clinical Trigger:</strong> Cirrhosis + hematemesis = think esophageal varices FIRST
+        </div>
+
+        <!-- LYMPH DRAINAGE -->
+        <h2>🧩 PATTERN #3: LYMPH DRAINAGE = METASTASIS HIGHWAYS</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Organ</th>
+                    <th>First Nodes</th>
+                    <th>Final Drainage</th>
+                    <th>Clinical Pearl</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Stomach</strong></td>
+                    <td>Gastric, gastroepiploic</td>
+                    <td>Celiac → Thoracic duct</td>
+                    <td>Virchow's node = left supraclavicular node (Troisier's sign)</td>
+                </tr>
+                <tr>
+                    <td><strong>Liver</strong></td>
+                    <td>Hepatic (porta hepatis)</td>
+                    <td>Celiac/Mediastinal</td>
+                    <td>Bare area → posterior mediastinal nodes</td>
+                </tr>
+                <tr>
+                    <td><strong>Gallbladder</strong></td>
+                    <td>Cystic nodes (Calot's triangle)</td>
+                    <td>Celiac → Thoracic duct</td>
+                    <td>Calot's triangle = surgical danger zone</td>
+                </tr>
+                <tr>
+                    <td><strong>Pancreas</strong></td>
+                    <td>Pancreaticosplenic</td>
+                    <td>Celiac/SMA → Thoracic duct</td>
+                    <td>Head CA → jaundice; body/tail = silent</td>
+                </tr>
+                <tr>
+                    <td><strong>Colon</strong></td>
+                    <td>Epicolic → Paracolic → Principal</td>
+                    <td>IMV/SMV → Cisterna chyli</td>
+                    <td>Apical nodes = worst prognosis</td>
+                </tr>
+                <tr>
+                    <td><strong>Rectum</strong></td>
+                    <td>Upper: Inferior mesenteric<br>Lower: Internal iliac</td>
+                    <td>Para-aortic</td>
+                    <td>Upper rectum → abdominal nodes;<br>Lower → inguinal (pectinate line = key)</td>
+                </tr>
+                <tr>
+                    <td><strong>Testis</strong></td>
+                    <td>Para-aortic (L2)</td>
+                    <td>Thoracic duct</td>
+                    <td><strong>NEVER</strong> inguinal nodes! (embryologic origin at L2)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tip">
+            <strong>💡 Rule:</strong> "Follow the artery → follow the vein → follow the lymph"<br>
+            <strong>💡 Exception:</strong> Testis drains to para-aortic (not inguinal) because it descends from L2
+        </div>
+
+        <!-- PAIN REFERRAL -->
+        <h2>🎯 PATTERN #4: PAIN REFERRAL = DERMATOME MAP</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Gut Division</th>
+                    <th>Sympathetic Level</th>
+                    <th>Referred Pain</th>
+                    <th>Example Conditions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Foregut</strong></td>
+                    <td>T5-T9</td>
+                    <td>Epigastric</td>
+                    <td>PUD, cholecystitis, pancreatitis</td>
+                </tr>
+                <tr>
+                    <td><strong>Midgut</strong></td>
+                    <td>T8-T12 (T10 key)</td>
+                    <td>Periumbilical</td>
+                    <td>Appendicitis (early), small bowel obstruction</td>
+                </tr>
+                <tr>
+                    <td><strong>Hindgut</strong></td>
+                    <td>L1-L2</td>
+                    <td>Hypogastric/Suprapubic</td>
+                    <td>Diverticulitis, sigmoid volvulus</td>
+                </tr>
+                <tr>
+                    <td><strong>Parietal Peritoneum</strong></td>
+                    <td>Somatic nerves<br>(intercostals, iliohypogastric)</td>
+                    <td>Localized, sharp,<br>worsens with movement</td>
+                    <td>Peritonitis, ruptured appendix (late)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="clinical-box">
+            <h3>💡 Clinical Algorithm:</h3>
+            <ol>
+                <li>Patient says "stomach pain" → Ask: "Point with ONE finger"</li>
+                <li>Epigastric → Think <strong>FOREGUT</strong> (stomach, gallbladder, pancreas)</li>
+                <li>Periumbilical → Think <strong>MIDGUT</strong> (appendix, small bowel)</li>
+                <li>RLQ localized → Think <strong>parietal peritoneum</strong> involvement (late appendicitis)</li>
+            </ol>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Gallbladder Special Case:</strong><br>
+            • Visceral pain: Epigastric/RUQ (T7-T9)<br>
+            • Referred: Right scapula (phrenic nerve C3-C5 irritation)<br>
+            • Parietal involvement: Localized RUQ tenderness (Murphy's sign)
+        </div>
+
+        <!-- INTEGRATED ORGAN CHEAT SHEETS -->
+        <h2>🧠 INTEGRATED ORGAN CHEAT SHEETS (5-LAYER FORMAT)</h2>
+
+        <!-- LIVER + GALLBLADDER -->
+        <div class="organ-card">
+            <h3>🫀 LIVER + GALLBLADDER (FOREGUT PAIR)</h3>
+            
+            <div class="layer">
+                <div class="layer-title">1️⃣ LOCATION</div>
+                <ul>
+                    <li><strong>Liver:</strong> RUQ, under ribs 7-11, diaphragmatic + visceral surfaces</li>
+                    <li><strong>Bare area:</strong> No peritoneum → contacts diaphragm → drains to mediastinal nodes</li>
+                    <li><strong>Gallbladder:</strong> Fossa between segments IV/V, visceral surface of liver</li>
+                    <li><strong>Peritoneal status:</strong> Liver = intraperitoneal (except bare area); Gallbladder = intraperitoneal</li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">2️⃣ SUPPLY</div>
+                <ul>
+                    <li><strong>Artery:</strong>
+                        <ul>
+                            <li>Liver: Proper hepatic (celiac → common hepatic) → right/left hepatic</li>
+                            <li>Gallbladder: Cystic artery (usually from right hepatic) ⚠️ <strong>25-50% variations!</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Vein:</strong>
+                        <ul>
+                            <li>Liver: Portal vein (70%, nutrient-rich) + Hepatic artery (30%, O₂-rich)</li>
+                            <li>Drainage: Hepatic veins → IVC</li>
+                            <li>Gallbladder: Small veins → hepatic parenchyma → portal system</li>
+                        </ul>
+                    </li>
+                    <li><strong>Lymph:</strong>
+                        <ul>
+                            <li>Liver: Deep → hepatic nodes → celiac; Superficial → porta hepatis/parasternal</li>
+                            <li>Gallbladder: Cystic nodes (Calot's) → porta hepatis → celiac</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">3️⃣ NERVE</div>
+                <ul>
+                    <li><strong>Parasympathetic:</strong> Vagus (CN X) → stimulates bile production, gallbladder contraction</li>
+                    <li><strong>Sympathetic:</strong> T7-T9 via celiac plexus → inhibits gallbladder, vasoconstriction</li>
+                    <li><strong>Sensory:</strong>
+                        <ul>
+                            <li>Liver capsule: Lower intercostals (T7-T11) → sharp, localized RUQ pain</li>
+                            <li>Gallbladder: Sympathetic afferents T7-T9 → referred to RUQ/epigastrium/right scapula</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">4️⃣ FUNCTION</div>
+                <ul>
+                    <li><strong>Liver:</strong> Bile production, detox, glycogen storage, protein synthesis, vitamin activation</li>
+                    <li><strong>Gallbladder:</strong> Concentrates/stores bile → releases with CCK/fatty meals</li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">5️⃣ CLINICAL</div>
+                <ul>
+                    <li><strong>Cholecystitis:</strong> Cystic duct obstruction → RUQ pain (visceral → parietal), Murphy's sign +</li>
+                    <li><strong>Cholecystectomy danger:</strong> Calot's triangle (cystic artery, cystic duct, common hepatic duct)</li>
+                    <li><strong>Liver trauma:</strong> Bare area injury → retroperitoneal bleed; Capsule stretch → sharp pain</li>
+                    <li><strong>Portal HTN:</strong> Esophageal varices (left gastric ↔ azygos), caput medusae, hemorrhoids</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong>🎯 Active Recall:</strong><br>
+                <strong>Q:</strong> "During cholecystectomy, you see an artery running along the cystic duct. What is it, and where does it usually come from?"<br>
+                <strong>A:</strong> Cystic artery → usually from right hepatic artery (but variations common!)
+            </div>
+        </div>
+
+        <!-- POSTERIOR ABDOMINAL WALL -->
+        <div class="organ-card">
+            <h3>🦴 POSTERIOR ABDOMINAL WALL (THE "BACKDOOR" TO ABDOMEN)</h3>
+            
+            <div class="layer">
+                <div class="layer-title">1️⃣ LOCATION</div>
+                <ul>
+                    <li><strong>Boundaries:</strong> T12-L5 vertebrae, 12th rib, iliac crest, psoas/QL muscles</li>
+                    <li><strong>Key space:</strong> Retroperitoneum (behind parietal peritoneum)</li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">2️⃣ SUPPLY</div>
+                <ul>
+                    <li><strong>Artery:</strong> Abdominal aorta (T12-L4) → lumbar, renal, gonadal, IMA branches</li>
+                    <li><strong>Vein:</strong> IVC (right of aorta) ← lumbar, renal, gonadal veins</li>
+                    <li><strong>Lymph:</strong> Para-aortic (lumbar) nodes ← kidneys, gonads, uterus, adrenals</li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">3️⃣ NERVE</div>
+                <p><strong>Lumbar plexus (L1-L4) EMBEDDED in psoas major:</strong></p>
+                <ul>
+                    <li><strong>Iliohypogastric (L1):</strong> Suprapubic sensation</li>
+                    <li><strong>Ilioinguinal (L1):</strong> Scrotum/labia, medial thigh</li>
+                    <li><strong>Genitofemoral (L1-L2):</strong> Cremasteric reflex</li>
+                    <li><strong>Lateral femoral cutaneous (L2-L3):</strong> Lateral thigh (meralgia paresthetica!)</li>
+                    <li><strong>Femoral (L2-L4):</strong> Anterior thigh motor/sensory</li>
+                    <li><strong>Obturator (L2-L4):</strong> Medial thigh adductors</li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">4️⃣ FUNCTION</div>
+                <ul>
+                    <li>Structural support for abdominal organs</li>
+                    <li>Conduit for vessels/nerves to lower limb + pelvis</li>
+                    <li>Retroperitoneal space = "highway" for surgical access (kidney, aorta)</li>
+                </ul>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">5️⃣ CLINICAL</div>
+                <ul>
+                    <li><strong>Psoas sign:</strong> Pain on hip extension → retrocecal appendicitis or psoas abscess</li>
+                    <li><strong>AAA:</strong> Pulsatile mass at L4 (aortic bifurcation) + back pain = surgical emergency</li>
+                    <li><strong>Meralgia paresthetica:</strong> Tight belt compresses lateral femoral cutaneous nerve → lateral thigh numbness</li>
+                    <li><strong>Lumbar puncture:</strong> Safe at L3-L4 or L4-L5 (below spinal cord end at L1-L2)</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong>🎯 Active Recall:</strong><br>
+                <strong>Q:</strong> "A construction worker has burning lateral thigh pain. He wears a tight tool belt. What nerve, and why no motor deficit?"<br>
+                <strong>A:</strong> Lateral femoral cutaneous nerve (L2-L3) → purely sensory → compression at inguinal ligament
+            </div>
+        </div>
+
+        <!-- CLINICAL DECISION TREE -->
+        <h2>🧭 CLINICAL DECISION TREE: "WHERE IS THE PAIN?"</h2>
+        <div class="clinical-box">
+            <p><strong>Patient presents with abdominal pain → Follow this algorithm:</strong></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Action</th>
+                    <th>Key Questions/Findings</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>STEP 1</strong></td>
+                    <td><strong>LOCALIZE THE PAIN</strong></td>
+                    <td>
+                        <ul>
+                            <li>Epigastric → FOREGUT (stomach, gallbladder, pancreas, duodenum 1st-2nd)</li>
+                            <li>Periumbilical → MIDGUT (appendix, small bowel, cecum)</li>
+                            <li>Hypogastric → HINDGUT (sigmoid, rectum)</li>
+                            <li>Localized + sharp + worse with movement → PARIETAL PERITONEUM (late appendicitis, perforation)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>STEP 2</strong></td>
+                    <td><strong>ADD ASSOCIATED SYMPTOMS</strong></td>
+                    <td>
+                        <ul>
+                            <li>RUQ pain + fever + Murphy's sign + → Cholecystitis</li>
+                            <li>Epigastric pain relieved by food → Duodenal ulcer</li>
+                            <li>Epigastric pain worsened by food → Gastric ulcer</li>
+                            <li>Periumbilical pain migrating to RLQ → Appendicitis</li>
+                            <li>LLQ pain + fever + change in bowel habits → Diverticulitis</li>
+                            <li>Flank pain + hematuria → Ureteric stone (retroperitoneal)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>STEP 3</strong></td>
+                    <td><strong>CHECK FOR RED FLAGS</strong></td>
+                    <td>
+                        <ul>
+                            <li>Hematemesis + cirrhosis → Esophageal varices (portal HTN)</li>
+                            <li>Pulsatile abdominal mass + back pain → AAA (emergency!)</li>
+                            <li>Jaundice + painless → Pancreatic head CA (obstructive)</li>
+                            <li>Weight loss + change in bowel habits + anemia → Colorectal CA</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>STEP 4</strong></td>
+                    <td><strong>RECALL THE ANATOMY</strong></td>
+                    <td>
+                        <ul>
+                            <li>"If it's foregut → celiac artery → vagus → T5-T9 → epigastric → portal drainage → celiac nodes"</li>
+                            <li>"If it's midgut → SMA → vagus → T9-T12 → umbilical → SMV → superior mesenteric nodes"</li>
+                            <li>"If it's hindgut → IMA → pelvic splanchnic → L1-L2 → hypogastric → IMV → inferior mesenteric nodes"</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- MEMORY PALACE -->
+        <h2>🧠 MEMORY PALACE: "THE ABDOMEN HOUSE"</h2>
+        <div class="pattern-box">
+            <p><em>Visualize walking through a house where each room = abdominal region</em></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Anatomy</th>
+                    <th>Clinical "Events"</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>🚪 FRONT DOOR</strong><br>(Epigastric/Foregut Room)</td>
+                    <td>
+                        <ul>
+                            <li>Furniture: Stomach sofa, Liver lamp, Gallbladder clock</li>
+                            <li>Wiring: Celiac trunk electrical panel, Vagus nerve intercom, T5-T9 thermostat</li>
+                        </ul>
+                    </td>
+                    <td>Emergency exit: Portal vein drain → if clogged → varices flood the esophagus window</td>
+                </tr>
+                <tr>
+                    <td><strong>🛋️ LIVING ROOM</strong><br>(Umbilical/Midgut Room)</td>
+                    <td>
+                        <ul>
+                            <li>Furniture: Small intestine rug, Appendix coat hook, Cecum side table</li>
+                            <li>Wiring: SMA power line, Vagus intercom, T10 thermostat (umbilical sensor)</li>
+                        </ul>
+                    </td>
+                    <td>Emergency: SMA syndrome = rug gets pinched between aorta and SMA beam</td>
+                </tr>
+                <tr>
+                    <td><strong>🚽 BATHROOM</strong><br>(Hypogastric/Hindgut Room)</td>
+                    <td>
+                        <ul>
+                            <li>Furniture: Sigmoid toilet, Rectum towel rack, Anal canal shower</li>
+                            <li>Wiring: IMA plumbing, Pelvic splanchnic intercom, L1-L2 thermostat</li>
+                        </ul>
+                    </td>
+                    <td>Warning: Pectinate line = tile border; above = visceral (painless hemorrhoids), below = somatic (painful)</td>
+                </tr>
+                <tr>
+                    <td><strong>🧱 BACK WALL</strong><br>(Retroperitoneum Utility Closet)</td>
+                    <td>
+                        <ul>
+                            <li>Contents: Aorta main pipe, IVC drain, Kidneys water heaters, Psoas support beams</li>
+                            <li>Wiring: Lumbar plexus control panel embedded in psoas beam</li>
+                        </ul>
+                    </td>
+                    <td>Danger: AAA = pipe ballooning at L4 junction → back pain + pulsation = call plumber (surgeon) STAT</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tip">
+            <strong>💡 Study hack:</strong> Close your eyes and "walk" through this house daily. Add clinical cases as "events" in each room.
+        </div>
+
+        <!-- ACTIVE RECALL DRILLS -->
+        <h2>🎯 ACTIVE RECALL DRILLS (DO THESE DAILY)</h2>
+
+        <div class="organ-card">
+            <h3>Drill 1: "Complete the Pattern"</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Foregut</th>
+                    <th>Midgut</th>
+                    <th>Hindgut</th>
+                </tr>
+                <tr>
+                    <td>Artery</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                </tr>
+                <tr>
+                    <td>Parasympathetic</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                </tr>
+                <tr>
+                    <td>Sympathetic levels</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                </tr>
+                <tr>
+                    <td>Referred pain</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                </tr>
+                <tr>
+                    <td>Lymph nodes</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                </tr>
+                <tr>
+                    <td>Portal drainage</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="organ-card">
+            <h3>Drill 2: "Clinical Vignette → Anatomy"</h3>
+            <div class="layer">
+                <div class="layer-title">Case:</div>
+                <p>45M with RUQ pain after fatty meals, fever, Murphy's sign +</p>
+                <p><strong>Questions:</strong></p>
+                <ul>
+                    <li>Which organ?</li>
+                    <li>Which artery?</li>
+                    <li>Which nerve carries pain?</li>
+                    <li>Which nodes if cancer?</li>
+                </ul>
+            </div>
+            <div class="tip">
+                <strong>Answer:</strong> Gallbladder → Cystic artery (right hepatic) → T7-T9 sympathetic afferents → Cystic nodes (Calot's) → celiac nodes
+            </div>
+        </div>
+
+        <div class="organ-card">
+            <h3>Drill 3: "Draw from Memory"</h3>
+            <p>Sketch the celiac trunk branches + what each supplies.</p>
+            <p><strong>Check:</strong> Did you include:</p>
+            <ul>
+                <li>Left gastric → esophagus/stomach?</li>
+                <li>Splenic → pancreas/spleen?</li>
+                <li>Common hepatic → liver/gallbladder/duodenum?</li>
+            </ul>
+        </div>
+
+        <div class="organ-card">
+            <h3>Drill 4: "Explain to a 10-Year-Old"</h3>
+            <div class="layer">
+                <div class="layer-title">Question:</div>
+                <p>"Why does gallbladder pain go to the shoulder?"</p>
+            </div>
+            <div class="tip">
+                <strong>Answer:</strong> "The gallbladder and shoulder share a 'phone line' (phrenic nerve C3-C5). When gallbladder is angry (inflamed), it calls the wrong number (shoulder) by mistake!"
+            </div>
+        </div>
+
+        <!-- STUDY STRATEGY -->
+        <h2>📚 STUDY STRATEGY FOR YOUR BRAIN TYPE</h2>
+        <div class="warning">
+            <p><strong>Since isolated facts "diffuse" for you:</strong></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Strategy</th>
+                    <th>How to Do It</th>
+                    <th>Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Always study in triplets</strong></td>
+                    <td>Structure + Supply + Clinical</td>
+                    <td>
+                        ❌ Don't memorize: "Cystic artery from right hepatic"<br>
+                        ✅ Do memorize: "Cystic artery (right hepatic) → if injured during cholecystectomy → bleed in Calot's triangle → need to control right hepatic"
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>2. Use the "Teach-Back" method</strong></td>
+                    <td>After reading a section, close the notes and explain it out loud as if teaching a classmate.</td>
+                    <td>Gaps = what to review</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Create "If-Then" chains</strong></td>
+                    <td>Link cause → effect → consequence</td>
+                    <td>
+                        "IF portal HTN → THEN left gastric vein backs up → THEN esophageal varices → THEN hematemesis"<br>
+                        "IF midgut volvulus → THEN SMA compression → THEN periumbilical pain → THEN bilious vomiting"
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>4. Color-code by pattern</strong></td>
+                    <td>Use consistent colors for each system</td>
+                    <td>
+                        🔴 Red = Arterial/Foregut<br>
+                        🔵 Blue = Venous/Portal<br>
+                        🟡 Yellow = Lymph/Midgut<br>
+                        🟢 Green = Nerve/Hindgut
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>5. Weekly integration session</strong></td>
+                    <td>Every Sunday, take 3 random organs and force yourself to compare all 5 layers side-by-side.</td>
+                    <td>Compare: Liver vs Gallbladder vs Pancreas</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- FINAL ENCOURAGEMENT -->
+        <div class="problem-solution" style="margin-top: 40px;">
+            <h2>💬 Final Encouragement</h2>
+            <p><strong>Your brain isn't broken—it's just waiting for the right framework.</strong></p>
+            <p>Anatomy isn't a list of facts; it's a story of relationships. Once you see the patterns:</p>
+            <ul>
+                <li>Foregut/Midgut/Hindgut</li>
+                <li>Portal/Systemic</li>
+                <li>Visceral/Somatic</li>
+            </ul>
+            <p><strong>Everything clicks.</strong></p>
+            <p style="text-align: center; margin-top: 20px; font-size: 1.2em;">
+                <span class="highlight">You've got this! 💪🩺</span>
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
