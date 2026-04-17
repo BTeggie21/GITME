@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Anatomy Tables: Abdomen</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 11px;
+            page-break-inside: auto;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #2980b9;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            vertical-align: top;
+        }
+        tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+        tr:hover {
+            background-color: #d5e8f3;
+        }
+        .arterial th {
+            background-color: #e74c3c;
+            border-color: #c0392b;
+        }
+        .venous th {
+            background-color: #3498db;
+            border-color: #2980b9;
+        }
+        .lymphatic th {
+            background-color: #f1c40f;
+            border-color: #f39c12;
+            color: #333;
+        }
+        .innervation th {
+            background-color: #2ecc71;
+            border-color: #27ae60;
+        }
+        .reference th {
+            background-color: #9b59b6;
+            border-color: #8e44ad;
+        }
+        .clinical-note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        .mnemonic {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        @media print {
+            body {
+                margin: 10px;
+                font-size: 10px;
+            }
+            table {
+                font-size: 9px;
+            }
+            th, td {
+                padding: 6px;
+            }
+            h2 {
+                page-break-after: avoid;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Integrated Anatomy Tables: Abdomen</h1>
+    <p style="text-align: center; font-style: italic;">Blood Supply, Drainage & Innervation - For PDF Conversion</p>
+
+    <!-- ARTERIAL BLOOD SUPPLY -->
+    <h2>🔴 ARTERIAL BLOOD SUPPLY</h2>
+    <table class="arterial">
+        <thead>
+            <tr>
+                <th>Organ/Region</th>
+                <th>Primary Artery</th>
+                <th>Source/Origin</th>
+                <th>Key Branches/Variations</th>
+                <th>Clinical Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Liver</strong></td>
+                <td>Proper hepatic artery</td>
+                <td>Celiac trunk → Common hepatic artery</td>
+                <td>Right/left hepatic arteries; cystic artery from right hepatic</td>
+                <td>Portal vein provides 70% of hepatic blood flow (nutrient-rich); hepatic artery provides oxygenated blood</td>
+            </tr>
+            <tr>
+                <td><strong>Gallbladder</strong></td>
+                <td>Cystic artery</td>
+                <td>Right hepatic artery (most common)</td>
+                <td>Variations: from hepatic proper, gastroduodenal, left hepatic, multiple arteries</td>
+                <td>Critical to identify during cholecystectomy to avoid bleeding; variations in 25-50% of cases</td>
+            </tr>
+            <tr>
+                <td><strong>Esophagus</strong></td>
+                <td>Cervical: Inferior thyroid<br>Thoracic: Aortic branches<br>Abdominal: Left gastric</td>
+                <td>Thyrocervical trunk / Thoracic aorta / Celiac trunk</td>
+                <td>Segmental supply with rich anastomoses</td>
+                <td>Portosystemic anastomosis at lower esophagus → varices in portal hypertension</td>
+            </tr>
+            <tr>
+                <td><strong>Stomach</strong></td>
+                <td>Celiac trunk derivatives</td>
+                <td>Celiac trunk</td>
+                <td>• Left gastric (celiac)<br>• Right gastric (common hepatic)<br>• Left gastro-omental (splenic)<br>• Right gastro-omental (gastroduodenal)</td>
+                <td>Rich anastomotic network; ligation of one artery usually compensated by collaterals</td>
+            </tr>
+            <tr>
+                <td><strong>Duodenum</strong></td>
+                <td>Proximal: Gastroduodenal<br>Distal: Inf. pancreaticoduodenal</td>
+                <td>Celiac trunk / SMA</td>
+                <td>Pancreaticoduodenal arcades (anterior/posterior)</td>
+                <td>Blood supply passes through pancreatic head → Whipple procedure complexity; dual supply at 2nd part</td>
+            </tr>
+            <tr>
+                <td><strong>Jejunum/Ileum</strong></td>
+                <td>Superior Mesenteric Artery (SMA)</td>
+                <td>SMA (L1 level)</td>
+                <td>Jejunal/ileal branches forming 3-5 arcades; vasa recta</td>
+                <td>SMA syndrome: compression of 3rd part of duodenum between SMA and aorta</td>
+            </tr>
+            <tr>
+                <td><strong>Large Intestine</strong></td>
+                <td>Proximal 2/3: SMA<br>Distal 1/3: IMA</td>
+                <td>SMA / IMA</td>
+                <td>Ileocolic, right/middle colic (SMA); Left colic, sigmoid, superior rectal (IMA)</td>
+                <td>Marginal artery of Drummond: critical collateral between SMA-IMA; Griffiths' point = watershed area</td>
+            </tr>
+            <tr>
+                <td><strong>Rectum/Anus</strong></td>
+                <td>Superior: IMA<br>Middle: Internal iliac<br>Inferior: Internal pudendal</td>
+                <td>IMA / Internal iliac / Pudendal</td>
+                <td>Superior/middle/inferior rectal arteries</td>
+                <td>Portosystemic anastomosis at rectum → hemorrhoids in portal HTN; pectinate line = embryologic boundary</td>
+            </tr>
+            <tr>
+                <td><strong>Posterior Abdominal Wall</strong></td>
+                <td>Lumbar arteries, Renal, Gonadal</td>
+                <td>Abdominal aorta (T12-L4)</td>
+                <td>Segmental lumbar branches; renal at L1-L2; gonadal at L2</td>
+                <td>AAA at L4 bifurcation: pulsatile mass, back pain, surgical emergency; left gonadal vein drains to renal</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mnemonic">
+        <strong>💡 Mnemonic for Gut Arteries:</strong> <em>"Celiac = Foregut (T5-T9), SMA = Midgut (T9-T12), IMA = Hindgut (L1-L2)"</em>
+    </div>
+
+    <!-- VENOUS DRAINAGE -->
+    <h2>🔵 VENOUS DRAINAGE</h2>
+    <table class="venous">
+        <thead>
+            <tr>
+                <th>Organ/Region</th>
+                <th>Primary Veins</th>
+                <th>Drainage Pathway</th>
+                <th>Portal vs. Systemic</th>
+                <th>Clinical Correlation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Liver</strong></td>
+                <td>Hepatic veins (R, M, L)</td>
+                <td>→ Inferior Vena Cava (IVC) at diaphragm</td>
+                <td>Systemic</td>
+                <td>Hepatic vein thrombosis → Budd-Chiari syndrome (painful hepatomegaly, ascites)</td>
+            </tr>
+            <tr>
+                <td><strong>Gallbladder</strong></td>
+                <td>Small unnamed veins</td>
+                <td>→ Hepatic parenchyma → Segmental portal veins</td>
+                <td>Portal</td>
+                <td>Post-cholecystectomy bleeding from gallbladder bed; cystic vein drains to right portal vein</td>
+            </tr>
+            <tr>
+                <td><strong>Esophagus</strong></td>
+                <td>Left gastric vein + Azygos vein</td>
+                <td>→ Portal vein + → SVC</td>
+                <td><strong>Both</strong> (portosystemic anastomosis)</td>
+                <td>Esophageal varices rupture → massive hematemesis in cirrhosis; lower 1/3 = portal drainage</td>
+            </tr>
+            <tr>
+                <td><strong>Stomach</strong></td>
+                <td>Gastric veins (L/R), gastro-omental veins</td>
+                <td>→ Portal vein via splenic/SMV</td>
+                <td>Portal</td>
+                <td>Gastric varices in portal hypertension; left gastric vein = main portal tributary</td>
+            </tr>
+            <tr>
+                <td><strong>Duodenum</strong></td>
+                <td>Pancreaticoduodenal veins</td>
+                <td>→ Portal vein via SMV/splenic vein</td>
+                <td>Portal</td>
+                <td>Pancreatitis can cause portal vein thrombosis; veins follow arterial arcades</td>
+            </tr>
+            <tr>
+                <td><strong>Small Intestine</strong></td>
+                <td>Superior Mesenteric Vein (SMV)</td>
+                <td>→ Portal vein (behind pancreatic neck)</td>
+                <td>Portal</td>
+                <td>SMV thrombosis → bowel ischemia; SMV lies to right of SMA</td>
+            </tr>
+            <tr>
+                <td><strong>Large Intestine</strong></td>
+                <td>Inferior Mesenteric Vein (IMV) + SMV</td>
+                <td>IMV → Splenic vein → Portal; SMV → Portal</td>
+                <td>Portal</td>
+                <td>IMV can drain into SMV or splenic vein (anatomic variation); important in portal HTN shunts</td>
+            </tr>
+            <tr>
+                <td><strong>Rectum/Anus</strong></td>
+                <td>Superior rectal → IMV<br>Middle/Inferior → Internal iliac</td>
+                <td>→ Portal + → Systemic (caval)</td>
+                <td><strong>Both</strong> (portosystemic anastomosis)</td>
+                <td>Internal hemorrhoids (portal, above pectinate line) vs. external (systemic, below); portal HTN → hemorrhoids</td>
+            </tr>
+            <tr>
+                <td><strong>Posterior Abdominal Wall</strong></td>
+                <td>Lumbar veins, Renal veins, Gonadal veins</td>
+                <td>→ IVC (R) / → Renal vein (L gonadal)</td>
+                <td>Systemic</td>
+                <td>Left gonadal vein drains to renal → varicocele more common on left; lumbar veins connect to azygos</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="clinical-note">
+        <strong>💡 Key Concept:</strong> Portosystemic anastomoses occur at: <strong>Esophagus (left gastric ↔ azygos), Rectum (superior rectal ↔ middle/inferior rectal), Umbilicus (paraumbilical ↔ superficial epigastric), Retroperitoneum (veins of Retzius ↔ lumbar/renal)</strong> → sites of varices in portal hypertension
+    </div>
+
+    <!-- LYMPHATIC DRAINAGE -->
+    <h2>🟡 LYMPHATIC DRAINAGE</h2>
+    <table class="lymphatic">
+        <thead>
+            <tr>
+                <th>Organ/Region</th>
+                <th>Primary Nodes</th>
+                <th>Final Drainage</th>
+                <th>Clinical Significance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Liver</strong></td>
+                <td>Deep: Hepatic nodes at hilum → Celiac nodes<br>Superficial: Porta hepatis, parasternal, posterior mediastinal</td>
+                <td>→ Cisterna chyli / Thoracic duct (R) or Thoracic duct (L)</td>
+                <td>Hepatic malignancy → celiac/mediastinal node metastasis; bare area drains to posterior mediastinal nodes</td>
+            </tr>
+            <tr>
+                <td><strong>Gallbladder</strong></td>
+                <td>Cystic nodes (Calot's triangle) → Porta hepatis nodes → Lesser omentum nodes</td>
+                <td>→ Celiac nodes → Thoracic duct</td>
+                <td>Gallbladder cancer → early spread to cystic/hepatic nodes; sentinel node in Calot's triangle</td>
+            </tr>
+            <tr>
+                <td><strong>Esophagus</strong></td>
+                <td>Lower esophagus → Celiac nodes; Upper → Paratracheal</td>
+                <td>→ Thoracic duct</td>
+                <td>Esophageal CA → supraclavicular (Virchow's) node metastasis; skip metastases common</td>
+            </tr>
+            <tr>
+                <td><strong>Stomach</strong></td>
+                <td>Gastric, gastroepiploic, pancreaticosplenic nodes</td>
+                <td>→ Celiac nodes → Cisterna chyli</td>
+                <td>Gastric CA → Virchow's node (left supraclavicular), Sister Mary Joseph nodule (umbilical); Japanese classification</td>
+            </tr>
+            <tr>
+                <td><strong>Small Intestine</strong></td>
+                <td>Mesenteric nodes along SMA</td>
+                <td>→ Superior mesenteric nodes → Cisterna chyli</td>
+                <td>Lymphoma, Crohn's disease involvement; mesenteric adenitis mimics appendicitis</td>
+            </tr>
+            <tr>
+                <td><strong>Large Intestine</strong></td>
+                <td>Epicolic → Paracolic → Intermediate → Principal (along IMA/SMA)</td>
+                <td>→ Inferior/Superior mesenteric nodes → Cisterna chyli</td>
+                <td>Colorectal CA staging based on nodal involvement (Dukes/TNM); apical nodes = prognostic</td>
+            </tr>
+            <tr>
+                <td><strong>Rectum/Anus</strong></td>
+                <td>Upper rectum → Inferior mesenteric/para-aortic<br>Lower rectum/anal canal → Internal iliac nodes</td>
+                <td>→ Lumbar/para-aortic nodes → Cisterna chyli</td>
+                <td>Rectal CA: upper → abdominal nodes; lower → inguinal nodes (below pectinate line); important for surgical planning</td>
+            </tr>
+            <tr>
+                <td><strong>Posterior Abdominal Wall</strong></td>
+                <td>Lumbar (para-aortic) nodes</td>
+                <td>→ Cisterna chyli → Thoracic duct</td>
+                <td>Testicular CA metastasizes to para-aortic nodes (NOT inguinal); ovarian CA → para-aortic + pelvic nodes</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mnemonic">
+        <strong>💡 Mnemonic for Retroperitoneal Lymph Drainage:</strong> <em>"Testes → Para-aortic; Scrotum → Inguinal"</em> (different embryologic origins: gonads develop at L2, descend)
+    </div>
+
+    <!-- INNERVATION -->
+    <h2>🟢 INNERVATION</h2>
+    <table class="innervation">
+        <thead>
+            <tr>
+                <th>Organ/Region</th>
+                <th>Parasympathetic</th>
+                <th>Sympathetic</th>
+                <th>Sensory/Pain Referral</th>
+                <th>Clinical Correlation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Liver</strong></td>
+                <td>Vagus (CN X) via hepatic plexus</td>
+                <td>T5-T9 via celiac plexus</td>
+                <td>Capsule: lower intercostal nerves (T7-T11)</td>
+                <td>Capsule distension → sharp RUQ pain (localized); referred pain to right shoulder via phrenic (C3-C5)</td>
+            </tr>
+            <tr>
+                <td><strong>Gallbladder</strong></td>
+                <td>Vagus (CN X); stimulated by CCK</td>
+                <td>T7-T9 via celiac plexus (inhibitory)</td>
+                <td>Sympathetic afferents T7-T9 → referred to RUQ, epigastrium, right scapula</td>
+                <td>Cholecystitis: visceral pain (colicky) → parietal peritoneum → localized tenderness (Murphy's sign)</td>
+            </tr>
+            <tr>
+                <td><strong>Esophagus</strong></td>
+                <td>Vagus (CN X) via esophageal plexus</td>
+                <td>T1-T5 via sympathetic chain</td>
+                <td>Visceral: epigastric; Somatic (lower): localized</td>
+                <td>GERD: retrosternal burning; Achalasia: dysphagia + regurgitation; bird's beak sign on imaging</td>
+            </tr>
+            <tr>
+                <td><strong>Stomach</strong></td>
+                <td>Vagus (CN X) – stimulates secretion/motility</td>
+                <td>T6-T9 via celiac plexus – inhibits</td>
+                <td>Epigastric region (T6-T9 dermatomes)</td>
+                <td>PUD: epigastric pain (hunger pain for duodenal, food-aggravated for gastric); vagotomy reduces acid</td>
+            </tr>
+            <tr>
+                <td><strong>Duodenum</strong></td>
+                <td>Vagus (CN X)</td>
+                <td>T8-T12 via celiac/SMA plexus</td>
+                <td>Periumbilical (T10)</td>
+                <td>Duodenal ulcer: epigastric pain relieved by food; perforation → sudden severe pain + rigidity</td>
+            </tr>
+            <tr>
+                <td><strong>Small Intestine</strong></td>
+                <td>Vagus (CN X)</td>
+                <td>T9-T12 via SMA plexus</td>
+                <td>Periumbilical</td>
+                <td>Small bowel obstruction: colicky periumbilical pain → vomiting → distension → absolute constipation</td>
+            </tr>
+            <tr>
+                <td><strong>Large Intestine</strong></td>
+                <td>Vagus (to proximal 2/3); Pelvic splanchnic S2-S4 (distal 1/3)</td>
+                <td>T9-T12 (SMA); L1-L2 (IMA plexus)</td>
+                <td>Proximal: periumbilical; Distal: hypogastric</td>
+                <td>Appendicitis: periumbilical (visceral) → migrates to RLQ (parietal); McBurney's point = 2/3 from umbilicus to ASIS</td>
+            </tr>
+            <tr>
+                <td><strong>Rectum/Anus</strong></td>
+                <td>Pelvic splanchnic nerves (S2-S4)</td>
+                <td>Hypogastric plexus (L1-L2)</td>
+                <td>Rectum: hypogastric; Anal canal (below pectinate): pudendal (S2-S4) → somatic pain</td>
+                <td>Internal hemorrhoids: painless (visceral innervation); External: painful (somatic); pectinate line = key boundary</td>
+            </tr>
+            <tr>
+                <td><strong>Posterior Abdominal Wall</strong></td>
+                <td>—</td>
+                <td>Lumbar plexus (L1-L4) derivatives</td>
+                <td>Dermatomal patterns</td>
+                <td>Psoas sign: pain on hip extension → retrocecal appendicitis/psoas abscess; obturator sign = pelvic appendicitis</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="clinical-note">
+        <strong>💡 Referred Pain Rule:</strong> <em>Foregut → Epigastrium (T5-T9) | Midgut → Umbilical (T8-T12) | Hindgut → Hypogastrium (L1-L2)</em>
+    </div>
+
+    <!-- FOREGUT/MIDGUT/HINDGUT REFERENCE -->
+    <h2>🧠 FOREGUT/MIDGUT/HINDGUT QUICK REFERENCE</h2>
+    <table class="reference">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Foregut</th>
+                <th>Midgut</th>
+                <th>Hindgut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Artery</strong></td>
+                <td>Celiac trunk</td>
+                <td>Superior Mesenteric (SMA)</td>
+                <td>Inferior Mesenteric (IMA)</td>
+            </tr>
+            <tr>
+                <td><strong>Parasympathetic</strong></td>
+                <td>Vagus (CN X)</td>
+                <td>Vagus (CN X)</td>
+                <td>Pelvic splanchnic (S2-S4)</td>
+            </tr>
+            <tr>
+                <td><strong>Sympathetic</strong></td>
+                <td>T5-T9 → Celiac ganglion</td>
+                <td>T9-T12 → SMA ganglion</td>
+                <td>L1-L2 → IMA ganglion</td>
+            </tr>
+            <tr>
+                <td><strong>Referred Pain</strong></td>
+                <td>Epigastric</td>
+                <td>Periumbilical</td>
+                <td>Hypogastric/Suprapubic</td>
+            </tr>
+            <tr>
+                <td><strong>Structures</strong></td>
+                <td>Esophagus (abdominal), Stomach, Duodenum (1st-2nd part), Liver, Gallbladder, Pancreas (head/body), Spleen</td>
+                <td>Duodenum (3rd-4th parts), Jejunum, Ileum, Cecum, Appendix, Ascending colon, Proximal 2/3 transverse colon</td>
+                <td>Distal 1/3 transverse colon, Descending colon, Sigmoid, Rectum, Upper anal canal (above pectinate line)</td>
+            </tr>
+            <tr>
+                <td><strong>Venous Drainage</strong></td>
+                <td>Portal via splenic/gastric veins</td>
+                <td>Portal via SMV</td>
+                <td>Portal via IMV → splenic vein</td>
+            </tr>
+            <tr>
+                <td><strong>Lymph Nodes</strong></td>
+                <td>Celiac nodes</td>
+                <td>Superior mesenteric nodes</td>
+                <td>Inferior mesenteric nodes</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- HIGH-YIELD MEMORY AIDS -->
+    <h2>🎯 HIGH-YIELD MEMORY AIDS</h2>
+    
+    <h3>Arterial Mnemonics:</h3>
+    <div class="mnemonic">
+        <ul>
+            <li><strong>Celiac trunk branches:</strong> <em>"Left Gastric, Splenic, Common Hepatic"</em> → <strong>L</strong>iver, <strong>S</strong>tomach, <strong>H</strong>eart<br>Mnemonic: <strong>L</strong>et's <strong>S</strong>hare <strong>H</strong>ealth</li>
+            <li><strong>SMA branches:</strong> <em>"I See 3 Right Colics"</em><br>→ <strong>I</strong>nferior pancreaticoduodenal, <strong>J</strong>ejunal, <strong>I</strong>leal, <strong>I</strong>leocolic, <strong>R</strong>ight colic, <strong>M</strong>iddle colic</li>
+            <li><strong>IMA branches:</strong> <em>"Left Colic, Sigmoid, Superior Rectal"</em> → <strong>L</strong>eft <strong>S</strong>ide <strong>R</strong>ectum</li>
+        </ul>
+    </div>
+
+    <h3>Portosystemic Anastomoses (4 Sites):</h3>
+    <div class="clinical-note">
+        <strong>ERUR:</strong> <strong>E</strong>sophagus, <strong>R</strong>ectum, <strong>U</strong>mbilicus, <strong>R</strong>etroperitoneum<br>
+        <em>"When portal pressure's high, these veins will lie!"</em>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Portal Vein Connection</th>
+                <th>Systemic Vein Connection</th>
+                <th>Clinical Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Esophagus</td>
+                <td>Left gastric vein</td>
+                <td>Azygos vein → SVC</td>
+                <td>Esophageal varices</td>
+            </tr>
+            <tr>
+                <td>Rectum</td>
+                <td>Superior rectal vein</td>
+                <td>Middle/inferior rectal → internal iliac</td>
+                <td>Hemorrhoids</td>
+            </tr>
+            <tr>
+                <td>Umbilicus</td>
+                <td>Paraumbilical veins</td>
+                <td>Superficial epigastric → femoral</td>
+                <td>Caput medusae</td>
+            </tr>
+            <tr>
+                <td>Retroperitoneum</td>
+                <td>Veins of Retzius</td>
+                <td>Lumbar/renal veins</td>
+                <td>Retroperitoneal varices</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Lymph Node Metastasis Patterns:</h3>
+    <ul>
+        <li>Gastric CA → <strong>Virchow's node</strong> (left supraclavicular/Troisier's sign)</li>
+        <li>Testicular CA → <strong>Para-aortic nodes</strong> (NOT inguinal; embryologic origin at L2)</li>
+        <li>Rectal CA: 
+            <ul>
+                <li>Upper (above pectinate) → Inferior mesenteric/para-aortic</li>
+                <li>Lower (below pectinate) → Internal iliac/inguinal nodes</li>
+            </ul>
+        </li>
+        <li>Pancreatic CA → Celiac/SMA nodes → Virchow's node</li>
+    </ul>
+
+    <h3>Nerve Injury Correlations:</h3>
+    <ul>
+        <li><strong>Vagus damage:</strong> ↓ gastric motility, ↓ acid secretion, gastroparesis, delayed gastric emptying</li>
+        <li><strong>Pelvic splanchnic (S2-S4) damage:</strong> ↓ rectal motility, urinary retention, sexual dysfunction (erection/ejaculation)</li>
+        <li><strong>Lower intercostal nerve damage:</strong> Loss of abdominal wall sensation, impaired cough, weakened abdominal reflexes</li>
+        <li><strong>Ilioinguinal/iliohypogastric injury:</strong> Post-herniorrhaphy groin pain, sensory loss over suprapubic region</li>
+    </ul>
+
+    <div class="clinical-note" style="margin-top: 30px; text-align: center; font-weight: bold;">
+        📌 Study Tip: Focus on patterns (e.g., all foregut organs share celiac artery + vagus + T5-T9 sympathetic) rather than isolated facts.
+    </div>
+
+</body>
+</html>

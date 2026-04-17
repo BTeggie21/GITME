@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIT Anatomy MCQs (1–60)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --error: #dc2626;
+            --error-bg: #fee2e2;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 4rem; }
+        
+        header { background: var(--card); padding: 1.5rem; text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; box-shadow: var(--shadow); }
+        header h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .stats { display: flex; justify-content: center; gap: 2rem; font-size: 0.9rem; color: var(--text-muted); }
+        .stat span { font-weight: 700; color: var(--primary); }
+        
+        main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .question-card { background: var(--card); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .q-num { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .q-stem { font-size: 1.05rem; font-weight: 500; margin-bottom: 1rem; }
+        
+        .options { display: flex; flex-direction: column; gap: 0.5rem; }
+        .option { display: flex; align-items: center; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; background: #fafafa; }
+        .option:hover { background: #f1f5f9; border-color: #cbd5e1; }
+        .option input { margin-right: 1rem; accent-color: var(--primary); }
+        .option.correct { background: var(--success-bg); border-color: var(--success); color: #064e3b; }
+        .option.incorrect { background: var(--error-bg); border-color: var(--error); color: #7f1d1d; }
+        .option.disabled { pointer-events: none; opacity: 0.7; }
+        
+        .btn-check { margin-top: 1rem; background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500; transition: background 0.2s; }
+        .btn-check:hover { background: var(--primary-dark); }
+        .btn-check:disabled { background: var(--text-muted); cursor: not-allowed; }
+        
+        .rationale { margin-top: 1rem; padding: 1rem; background: #f0f9ff; border-left: 4px solid var(--primary); border-radius: 6px; display: none; animation: fadeIn 0.3s ease; }
+        .rationale.show { display: block; }
+        .rationale strong { color: var(--primary); }
+        
+        footer { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); padding: 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.05); }
+        .progress-bar { flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 0 1rem; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--success); width: 0%; transition: width 0.3s ease; }
+        .btn-reset { background: transparent; color: var(--error); border: 1px solid var(--error); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 600px) { header h1 { font-size: 1.25rem; } .q-stem { font-size: 0.95rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧠 GIT Anatomy MCQs (1–60)</h1>
+        <div class="stats">
+            <div class="stat">Score: <span id="score">0</span>/60</div>
+            <div class="stat">Completed: <span id="completed">0</span>/60</div>
+        </div>
+    </header>
+
+    <main id="quiz-container"></main>
+
+    <footer>
+        <button class="btn-reset" onclick="resetQuiz()">Reset Quiz</button>
+        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+        <span id="progress-text">0%</span>
+    </footer>
+
+    <script>
+        const quizData = [
+            {id:1, q:"A 54-year-old man undergoes surgery for a pancreatic head tumor. During resection, the surgeon removes part of the duodenum due to shared vascular supply. Which artery is most directly responsible for this surgical necessity?", opts:["A. Left gastric artery","B. Superior pancreaticoduodenal artery","C. Inferior mesenteric artery","D. Middle colic artery"], ans:"B", rat:"The superior and inferior pancreaticoduodenal arteries form an anastomotic arcade between the celiac trunk and SMA. Tumors in the pancreatic head often involve this shared blood supply, necessitating concurrent duodenal resection (Whipple procedure)."},
+            {id:2, q:"A 26-year-old man presents with sudden periumbilical pain that later localizes to the right lower quadrant. Which embryologic structure explains the initial pain location?", opts:["A. Foregut visceral afferents","B. Midgut visceral afferents","C. Hindgut somatic innervation","D. Parietal peritoneum"], ans:"B", rat:"Midgut structures (distal duodenum to proximal 2/3 transverse colon) refer visceral pain to the periumbilical region via T10 spinal segments. Pain localizes to the RLQ only when inflammation irritates the somatically innervated parietal peritoneum."},
+            {id:3, q:"During laparoscopic surgery, a surgeon enters the lesser sac through a natural opening. Which structure forms the anterior boundary of this opening?", opts:["A. Portal vein","B. Inferior vena cava","C. Hepatoduodenal ligament","D. Gastrosplenic ligament"], ans:"C", rat:"The epiploic foramen (of Winslow) connects the greater and lesser sacs. Its anterior boundary is the free edge of the lesser omentum (hepatoduodenal ligament), containing the portal triad."},
+            {id:4, q:"A patient with portal hypertension develops esophageal varices. Which anatomical junction allows communication between portal and systemic venous systems?", opts:["A. Celiac trunk and SMA","B. Left gastric vein and azygos vein","C. Superior mesenteric vein and IVC","D. Splenic vein and renal vein"], ans:"B", rat:"Esophageal varices result from portosystemic anastomosis between the left gastric vein (portal) and the azygos/hemiazygos veins (systemic) in the lower esophagus."},
+            {id:5, q:"A neonate is diagnosed with malrotation of the midgut. Which embryological process is most likely disrupted?", opts:["A. Foregut elongation","B. 90° clockwise rotation","C. 270° counterclockwise rotation","D. Hindgut regression"], ans:"C", rat:"Normal midgut development involves a 270° counterclockwise rotation around the SMA axis during herniation and return to the abdominal cavity. Disruption causes malrotation and predisposes to volvulus."},
+            {id:6, q:"A stab wound at the epigastric region damages structures derived from the foregut. Which organ is most likely affected?", opts:["A. Jejunum","B. Descending colon","C. Stomach","D. Sigmoid colon"], ans:"C", rat:"Foregut derivatives include the esophagus, stomach, proximal duodenum, liver, pancreas, and gallbladder. The jejunum is midgut, and the descending/sigmoid colon are hindgut."},
+            {id:7, q:"A patient with cirrhosis develops fluid accumulation in the peritoneal cavity. Which space allows accumulation of fluid posterior to the stomach?", opts:["A. Greater sac","B. Lesser sac","C. Hepatorenal recess","D. Subphrenic recess"], ans:"B", rat:"The lesser sac (omental bursa) lies directly posterior to the stomach and anterior to the pancreas. Ascitic fluid can track into this space via the epiploic foramen."},
+            {id:8, q:"A patient presents with compression of the common bile duct by a gallstone. Which structure is most likely also compressed due to its location within the same ligament?", opts:["A. Splenic artery","B. Hepatic artery proper","C. Inferior vena cava","D. Superior mesenteric artery"], ans:"B", rat:"The hepatoduodenal ligament contains the portal triad: common bile duct, hepatic artery proper, and portal vein. Compression or inflammation in this space often affects multiple components."},
+            {id:9, q:"A surgeon ligates a vessel supplying the distal third of the transverse colon. Which artery is involved?", opts:["A. Superior mesenteric artery","B. Inferior mesenteric artery","C. Celiac trunk","D. Left gastric artery"], ans:"B", rat:"The distal 1/3 of the transverse colon, descending colon, and sigmoid colon are hindgut derivatives supplied by the inferior mesenteric artery (IMA)."},
+            {id:10, q:"A patient presents with a retroperitoneal abscess. Which structure is most likely involved?", opts:["A. Stomach","B. Jejunum","C. Pancreatic head","D. Transverse colon"], ans:"C", rat:"The pancreas (except the tail), duodenum (2nd–4th parts), kidneys, and ascending/descending colon are secondarily retroperitoneal. A pancreatic head infection/abscess typically remains retroperitoneal."},
+            {id:11, q:"A patient with appendicitis shows a positive psoas sign. Which anatomical relationship explains this?", opts:["A. Appendix lies anterior to psoas","B. Appendix lies posterior to psoas","C. Retrocecal appendix irritates psoas muscle","D. Appendix is intraperitoneal"], ans:"C", rat:"A retrocecal appendix lies directly against the psoas major muscle. Extension of the right hip stretches the psoas, irritating the inflamed appendix and causing pain (positive psoas sign)."},
+            {id:12, q:"A patient presents with referred pain to the hypogastric region. Which structure is most likely involved?", opts:["A. Stomach","B. Jejunum","C. Sigmoid colon","D. Duodenum"], ans:"C", rat:"Hindgut structures (distal 1/3 transverse colon to upper anal canal) refer visceral pain to the hypogastric/suprapubic region via T12–L2 spinal segments. The sigmoid colon is a hindgut derivative."},
+            {id:13, q:"During a Whipple procedure, which structure must be preserved to maintain hepatic blood flow?", opts:["A. Splenic artery","B. Hepatic artery proper","C. Inferior mesenteric artery","D. Left gastric artery"], ans:"B", rat:"The hepatic artery proper supplies oxygenated blood to the liver, gallbladder, and extrahepatic bile ducts. It must be carefully preserved during pancreaticoduodenectomy."},
+            {id:14, q:"A patient presents with volvulus of the sigmoid colon. Which anatomical feature predisposes this region?", opts:["A. Short mesentery","B. Retroperitoneal fixation","C. Long mesentery","D. Lack of blood supply"], ans:"C", rat:"The sigmoid colon has a long, mobile mesentery (sigmoid mesocolon), which predisposes it to twisting around its vascular axis, causing volvulus."},
+            {id:15, q:"A surgeon is identifying the boundary between midgut and hindgut. Which landmark is most accurate?", opts:["A. Splenic flexure","B. Hepatic flexure","C. Cecum","D. Appendix"], ans:"A", rat:"The splenic flexure (left colic flexure) marks the embryological and vascular transition between the midgut (SMA) and hindgut (IMA)."},
+            {id:16, q:"A patient presents with obstruction of the epiploic foramen. Which structure lies posterior to this opening?", opts:["A. Portal vein","B. Inferior vena cava","C. Common bile duct","D. Hepatic artery"], ans:"B", rat:"The boundaries of the epiploic foramen: anterior = hepatoduodenal ligament; posterior = IVC; superior = caudate lobe of liver; inferior = 1st part of duodenum."},
+            {id:17, q:"A patient has a tumor compressing the vagus nerve near the esophagus. Which function is most affected?", opts:["A. Sympathetic inhibition","B. Parasympathetic motility","C. Somatic sensation","D. Hormonal secretion"], ans:"B", rat:"The vagus nerve (CN X) provides parasympathetic innervation to the foregut and midgut, regulating GI motility, secretion, and relaxation of sphincters."},
+            {id:18, q:"A patient presents with a perforated gastric ulcer eroding into the pancreas. Which part of the stomach is most likely involved?", opts:["A. Greater curvature","B. Fundus","C. Posterior wall","D. Pylorus"], ans:"C", rat:"The posterior wall of the stomach forms the anterior boundary of the lesser sac. Ulcers here commonly erode posteriorly into the pancreas or splenic artery."},
+            {id:19, q:"A patient presents with referred shoulder pain after splenic rupture. Which anatomical structure mediates this pain?", opts:["A. Phrenic nerve","B. Vagus nerve","C. Intercostal nerve","D. Lumbar plexus"], ans:"A", rat:"Blood irritating the diaphragmatic peritoneum is sensed by the phrenic nerve (C3–C5), which refers pain to the shoulder (Kehr's sign) via the supraclavicular nerves."},
+            {id:20, q:"A patient has a tumor at the ampulla of Vater. Which structure is most directly affected?", opts:["A. First part of duodenum","B. Second part of duodenum","C. Third part of duodenum","D. Fourth part of duodenum"], ans:"B", rat:"The hepatopancreatic ampulla (of Vater) opens into the major duodenal papilla, located on the posteromedial wall of the descending (2nd) part of the duodenum."},
+            {id:21, q:"A patient develops ischemia of the jejunum. Which artery is primarily involved?", opts:["A. Inferior mesenteric artery","B. Superior mesenteric artery","C. Celiac trunk","D. Left gastric artery"], ans:"B", rat:"The jejunum and ileum are midgut derivatives supplied by multiple jejunal and ileal branches arising from the superior mesenteric artery (SMA)."},
+            {id:22, q:"A surgeon identifies a ligament connecting the liver to the anterior abdominal wall. Which structure is this?", opts:["A. Coronary ligament","B. Hepatogastric ligament","C. Falciform ligament","D. Hepatoduodenal ligament"], ans:"C", rat:"The falciform ligament is a remnant of the ventral mesentery that attaches the liver to the anterior abdominal wall and contains the ligamentum teres hepatis."},
+            {id:23, q:"A patient with trauma develops bleeding into the hepatorenal recess. Where will fluid accumulate when supine?", opts:["A. Pelvis","B. Subphrenic space","C. Morison’s pouch","D. Lesser sac"], ans:"C", rat:"Morison’s pouch (hepatorenal recess) is the most dependent part of the peritoneal cavity in the supine position, making it the first site where free fluid/blood collects on FAST exam."},
+            {id:24, q:"A tumor compresses the inferior vena cava at the level of the liver. Which liver region is most closely related?", opts:["A. Quadrate lobe","B. Caudate lobe","C. Left lobe","D. Right lobe"], ans:"B", rat:"The caudate lobe lies posteriorly and is closely related to the IVC. It receives independent portal and arterial supply and drains directly into hepatic veins/IVC."},
+            {id:25, q:"A patient presents with a congenital anomaly affecting the ventral mesentery. Which structure is most likely affected?", opts:["A. Greater omentum","B. Lesser omentum","C. Mesentery of jejunum","D. Mesocolon"], ans:"B", rat:"The ventral mesentery gives rise to the lesser omentum (hepatogastric & hepatoduodenal ligaments) and falciform ligament. The dorsal mesentery forms the greater omentum and intestinal mesenteries."},
+            {id:26, q:"A patient with chronic GERD develops Barrett esophagus. Which anatomical transition is involved?", opts:["A. Squamous to columnar epithelium","B. Columnar to squamous epithelium","C. Cuboidal to columnar epithelium","D. Transitional to squamous epithelium"], ans:"A", rat:"Barrett esophagus is characterized by intestinal metaplasia where the normal nonkeratinized stratified squamous epithelium is replaced by columnar epithelium with goblet cells."},
+            {id:27, q:"A surgeon identifies a structure passing through the esophageal hiatus at T10. Which structure accompanies the esophagus?", opts:["A. Aorta","B. Vagus nerve","C. Thoracic duct","D. Azygos vein"], ans:"B", rat:"The esophageal hiatus (T10) transmits the esophagus and anterior/posterior vagal trunks. The aorta passes through the aortic hiatus at T12."},
+            {id:28, q:"A patient presents with obstruction at the third part of the duodenum. Which structure most commonly compresses it?", opts:["A. Portal vein","B. Superior mesenteric artery","C. Inferior vena cava","D. Splenic artery"], ans:"B", rat:"Superior mesenteric artery (SMA) syndrome occurs when the 3rd part of the duodenum is compressed between the SMA anteriorly and the aorta posteriorly, often after rapid weight loss."},
+            {id:29, q:"A patient develops portal hypertension. Which region is most vulnerable to variceal bleeding?", opts:["A. Lower esophagus","B. Jejunum","C. Ascending colon","D. Rectum below pectinate line"], ans:"A", rat:"Esophageal varices (left gastric ↔ azygos anastomosis) are under high pressure and lack supporting tissue, making them prone to life-threatening rupture."},
+            {id:30, q:"A patient presents with inguinal hernia passing through the deep inguinal ring. Which structure is the key landmark?", opts:["A. Inferior epigastric vessels","B. Femoral artery","C. External iliac vein","D. Internal iliac artery"], ans:"A", rat:"The deep inguinal ring lies lateral to the inferior epigastric vessels. Indirect hernias pass lateral to these vessels, while direct hernias pass medial to them."},
+            {id:31, q:"A 62-year-old man undergoes repair of a perforated posterior duodenal ulcer. During surgery, brisk hemorrhage occurs from a vessel lying posterior to the first part of the duodenum. Which vessel was most likely injured?", opts:["A. Right gastric artery","B. Gastroduodenal artery","C. Superior mesenteric artery","D. Splenic artery"], ans:"B", rat:"The gastroduodenal artery descends posterior to the 1st part of the duodenum. Posterior ulcers here can erode into this vessel, causing massive upper GI hemorrhage."},
+            {id:32, q:"A 48-year-old woman with severe acute cholecystitis undergoes emergency cholecystectomy. During dissection of Calot triangle, the surgeon must identify the artery most commonly ligated during the procedure. Which artery is it?", opts:["A. Right hepatic artery","B. Proper hepatic artery","C. Cystic artery","D. Left hepatic artery"], ans:"C", rat:"The cystic artery (usually a branch of the right hepatic artery) traverses the hepatobiliary (Calot) triangle and must be ligated during cholecystectomy."},
+            {id:33, q:"A 5-day-old newborn has bilious vomiting. Imaging shows failure of recanalization of the duodenal lumen. The obstructed segment is most likely derived from which embryologic region?", opts:["A. Foregut only","B. Midgut only","C. Foregut and midgut junction","D. Hindgut and cloaca junction"], ans:"C", rat:"The duodenum proximal to the major papilla is foregut-derived, while distal is midgut-derived. Duodenal atresia/stenosis most commonly occurs at this embryological junction."},
+            {id:34, q:"A 43-year-old man has carcinoma involving the lower third of the esophagus. Lymphatic spread from this region most directly reaches which nodes?", opts:["A. Deep cervical nodes","B. Posterior mediastinal nodes only","C. Celiac nodes","D. Superior mesenteric nodes"], ans:"C", rat:"The lower esophagus drains primarily to the celiac lymph nodes, reflecting its foregut origin. Upper esophagus drains to deep cervical nodes; middle to mediastinal nodes."},
+            {id:35, q:"A 25-year-old woman has sharp localized pain after perforated appendicitis irritates the parietal peritoneum. Which feature best explains why this pain is well localized?", opts:["A. Visceral peritoneum is richly innervated by somatic fibers","B. Parietal peritoneum is innervated by somatic nerves","C. Visceral afferents synapse in dorsal root ganglia only","D. Sympathetic fibers mediate sharp pain"], ans:"B", rat:"The parietal peritoneum receives somatic innervation from spinal nerves, allowing precise localization of pain. Visceral peritoneum has autonomic innervation, causing dull, poorly localized pain."},
+            {id:36, q:"A 71-year-old man develops bowel ischemia involving the splenic flexure. This region is especially vulnerable because it lies at a watershed between which arteries?", opts:["A. Celiac trunk and SMA","B. SMA and IMA","C. Left gastric and splenic","D. IMA and internal iliac"], ans:"B", rat:"Griffith's point at the splenic flexure is a watershed area between the SMA (middle colic artery) and IMA (left colic artery), making it highly susceptible to ischemic colitis during hypoperfusion."},
+            {id:37, q:"A patient with pancreatic tail trauma develops intraperitoneal bleeding rather than retroperitoneal bleeding. This difference is best explained by the fact that the pancreatic tail lies within the:", opts:["A. Hepatoduodenal ligament","B. Gastrosplenic ligament","C. Splenorenal ligament","D. Transverse mesocolon"], ans:"C", rat:"Unlike the rest of the pancreas, the tail is intraperitoneal and lies within the splenorenal ligament. Trauma here causes bleeding into the peritoneal cavity."},
+            {id:38, q:"A 57-year-old woman with gastric carcinoma is found to have a metastatic nodule in the rectouterine pouch. Which property of this pouch best explains tumor implantation there?", opts:["A. It communicates with the lesser sac","B. It is a remnant of the ventral mesentery","C. It is a dependent part of the peritoneal cavity in females","D. It is directly continuous with the retroperitoneum"], ans:"C", rat:"The rectouterine pouch (pouch of Douglas) is the most gravity-dependent portion of the peritoneal cavity in females. Free fluid, cells, or exudates naturally settle here."},
+            {id:39, q:"A 34-year-old man has peptic ulcer disease. His ulcer is located on the lesser curvature near the incisura angularis. Which artery is most closely associated with this region?", opts:["A. Right gastric artery","B. Left gastro-omental artery","C. Short gastric arteries","D. Middle colic artery"], ans:"A", rat:"The right gastric artery runs along the lesser curvature of the stomach, anastomosing with the left gastric artery. It supplies this region and can be eroded by lesser curvature ulcers."},
+            {id:40, q:"A patient with severe pancreatitis has chemical irritation tracking into the lesser sac. Which structure forms most of the anterior wall of this space?", opts:["A. Posterior abdominal wall","B. Transverse colon","C. Stomach","D. Left kidney"], ans:"C", rat:"The anterior wall of the lesser sac is formed primarily by the posterior surface of the stomach and the lesser omentum. Pancreatic exudate easily tracks into this space."},
+            {id:41, q:"A 63-year-old man presents with jaundice and a palpable nontender gallbladder. Pancreatic adenocarcinoma is suspected. The tumor is most likely located in which part of the pancreas?", opts:["A. Tail","B. Body","C. Neck","D. Head"], ans:"D", rat:"Courvoisier's sign (palpable, nontender gallbladder with jaundice) typically indicates obstruction of the common bile duct, most commonly by a tumor in the head of the pancreas."},
+            {id:42, q:"A 23-year-old man suffers a penetrating wound to the left upper quadrant, injuring the spleen and short gastric vessels. These vessels run within which peritoneal ligament?", opts:["A. Hepatoduodenal ligament","B. Gastrosplenic ligament","C. Splenorenal ligament","D. Falciform ligament"], ans:"B", rat:"The short gastric arteries and left gastro-omental vessels course within the gastrosplenic ligament, connecting the greater curvature of the stomach to the spleen."},
+            {id:43, q:"A patient with severe pancreatitis develops a splenic vein thrombosis. Which vessels are most likely to become dilated secondarily?", opts:["A. Middle rectal veins","B. Paraumbilical veins","C. Short gastric veins","D. Inferior phrenic veins"], ans:"C", rat:"Splenic vein thrombosis causes isolated left-sided portal hypertension. Blood backs up into the short gastric veins, leading to isolated gastric varices without esophageal varices."},
+            {id:44, q:"During mobilization of the descending colon, a surgeon reflects it medially from the posterior abdominal wall. This is possible because the descending colon is normally classified as:", opts:["A. Intraperitoneal with long mesentery","B. Secondarily retroperitoneal","C. Primarily retroperitoneal","D. Suspended by ventral mesentery"], ans:"B", rat:"The ascending and descending colon are secondarily retroperitoneal. Their mesenteries fuse with the posterior parietal peritoneum during development, creating avascular fusion planes (Toldt's fascia) for mobilization."},
+            {id:45, q:"A patient with Crohn disease undergoes ileocecal resection. Which artery most directly supplies the terminal ileum and cecum?", opts:["A. Right colic artery","B. Middle colic artery","C. Ileocolic artery","D. Inferior mesenteric artery"], ans:"C", rat:"The ileocolic artery, a terminal branch of the SMA, supplies the terminal ileum, cecum, appendix, and proximal ascending colon."},
+            {id:46, q:"A 29-year-old woman has persistent vomiting from hypertrophic pyloric stenosis. The narrowed pyloric canal lies at the junction of the stomach with which segment?", opts:["A. First part of duodenum","B. Second part of duodenum","C. Distal esophagus","D. Jejunum"], ans:"A", rat:"The pylorus connects the stomach to the first (superior) part of the duodenum. Hypertrophy of the pyloric sphincter muscle causes gastric outlet obstruction in infants."},
+            {id:47, q:"A patient with an ulcerating carcinoma of the anal canal has metastasis to superficial inguinal nodes. The primary lesion is most likely located:", opts:["A. Above the pectinate line","B. At the anorectal junction","C. Below the pectinate line","D. In the rectal ampulla"], ans:"C", rat:"Tissues below the pectinate line drain to superficial inguinal lymph nodes. Lesions above the line drain to internal iliac nodes."},
+            {id:48, q:"A 38-year-old woman has severe pain from an internal hemorrhoid. Compared with an external hemorrhoid, the lesion is located in a region derived from the:", opts:["A. Proctodeum","B. Hindgut","C. Foregut","D. Midgut"], ans:"B", rat:"Internal hemorrhoids occur above the pectinate line, which is derived from endodermal hindgut. External hemorrhoids occur below the line, derived from ectodermal proctodeum."},
+            {id:49, q:"A 58-year-old man undergoes surgery near the root of the mesentery. Which structure crosses posterior to the root and is therefore at risk during dissection?", opts:["A. Splenic artery","B. Left ureter","C. Cystic duct","D. Inferior mesenteric vein only"], ans:"B", rat:"The root of the small bowel mesentery runs from the duodenojejunal flexure to the right iliac fossa. It crosses anterior to the 3rd part of duodenum, aorta, IVC, and right ureter/psoas. The left ureter is nearby during mobilization."},
+            {id:50, q:"A patient with a duodenal ulcer has pain relieved by meals. The ulcer is in the proximal duodenum, which is unique because it is:", opts:["A. Entirely intraperitoneal","B. Entirely supplied by the IMA","C. Derived partly from foregut and has dual arterial supply","D. Suspended by the falciform ligament"], ans:"C", rat:"The 1st part of the duodenum is a foregut derivative but receives dual blood supply: proximal from the celiac trunk (via gastroduodenal artery) and distal from the SMA (via inferior pancreaticoduodenal artery)."},
+            {id:51, q:"A 60-year-old man has a tumor at the root of the superior mesenteric artery, causing loss of parasympathetic input to much of the midgut. Which nerve fibers are primarily interrupted?", opts:["A. Pelvic splanchnic fibers","B. Vagal fibers","C. Greater splanchnic fibers","D. Lumbar splanchnic fibers"], ans:"B", rat:"Parasympathetic innervation to the foregut and midgut (up to the splenic flexure) is provided by vagal fibers that travel along the celiac and SMA plexuses. Pelvic splanchnics supply the hindgut."},
+            {id:52, q:"A patient with perforated anterior gastric ulcer develops peritonitis. Free fluid is expected to collect first in which peritoneal compartment?", opts:["A. Lesser sac","B. Greater sac","C. Retroperitoneal space","D. Omental bursa behind the pancreas"], ans:"B", rat:"An anterior gastric ulcer perforates into the greater sac, the main peritoneal cavity. Fluid and gastric contents rapidly spread here, causing generalized peritonitis."},
+            {id:53, q:"A 50-year-old woman has a carcinoma involving the gallbladder fundus. On exam, the mass projects at the tip of the right ninth costal cartilage. This surface landmark corresponds to the:", opts:["A. Transpyloric plane","B. Midclavicular line intersection","C. Right linea semilunaris only","D. Left subcostal plane"], ans:"B", rat:"The gallbladder fundus typically projects at the intersection of the right midclavicular line and the 9th costal cartilage, a key surface anatomy landmark for Murphy's sign and palpation."},
+            {id:54, q:"A 36-year-old man undergoes surgery for a Meckel diverticulum. This structure most commonly arises from persistence of the:", opts:["A. Urachus","B. Vitelline duct","C. Omphalomesenteric artery","D. Dorsal pancreatic bud"], ans:"B", rat:"Meckel diverticulum is a true diverticulum caused by failure of the vitelline (omphalomesenteric) duct to obliterate. It follows the \"rule of 2s\" and is located on the antimesenteric border of the ileum."},
+            {id:55, q:"A patient with massive ascites undergoes paracentesis. To reduce risk of puncturing an inferior epigastric vessel, the needle is commonly inserted:", opts:["A. In the midline through the linea alba","B. Through the umbilicus","C. At the transpyloric plane lateral to rectus abdominis","D. Just inferior to the xiphoid process"], ans:"A", rat:"The linea alba is an avascular midline raphe. Inserting the needle here (typically 2–3 cm lateral and superior to the pubic symphysis) minimizes risk of injuring the inferior epigastric arteries."},
+            {id:56, q:"A 65-year-old man with rectal carcinoma has spread to internal iliac nodes. The tumor is most likely located in the:", opts:["A. Upper rectum only","B. Lower rectum","C. Anal pecten","D. Sigmoid colon"], ans:"B", rat:"The lower rectum (below the peritoneal reflection) drains primarily to the internal iliac lymph nodes. Upper rectal drainage follows the superior rectal vessels to inferior mesenteric nodes."},
+            {id:57, q:"A 40-year-old man suffers blunt trauma to the abdomen. CT shows a hematoma posterior to the stomach and anterior to the pancreas. This collection is located in the:", opts:["A. Greater sac","B. Lesser sac","C. Left paracolic gutter","D. Hepatorenal recess"], ans:"B", rat:"The space between the posterior stomach and anterior pancreas is the lesser sac (omental bursa). Fluid collections here are classic for pancreatic trauma or posterior gastric perforation."},
+            {id:58, q:"A 21-year-old man has a congenital indirect inguinal hernia associated with failure of obliteration of which embryonic structure?", opts:["A. Gubernaculum testis","B. Processus vaginalis","C. Urachus","D. Vitelline duct"], ans:"B", rat:"Indirect inguinal hernias result from a patent processus vaginalis, allowing abdominal contents to follow the path of testicular descent through the deep inguinal ring and inguinal canal."},
+            {id:59, q:"A patient has severe pain from an inflamed gallbladder irritating the diaphragmatic peritoneum. Pain is referred to the right shoulder through fibers traveling mainly in the:", opts:["A. Vagus nerve","B. Greater splanchnic nerve","C. Phrenic nerve","D. Intercostobrachial nerve"], ans:"C", rat:"Irritation of the central diaphragmatic peritoneum is transmitted via the phrenic nerve (C3–C5), which refers pain to the shoulder dermatomes (C4). This is classic for biliary disease."},
+            {id:60, q:"A 38-year-old man presents with right lower quadrant pain. During surgery, the surgeon notes the appendix is located behind the cecum. This position explains why the patient lacks classic anterior tenderness. Which sign would most likely be positive?", opts:["A. Obturator sign","B. Psoas sign","C. Rovsing sign","D. Murphy sign"], ans:"B", rat:"A retrocecal appendix lies against the psoas muscle. Extension of the right hip stretches this muscle, causing pain (positive psoas sign), whereas anterior peritoneal signs may be absent."}
+        ];
+
+        let score = 0;
+        let completed = 0;
+        const container = document.getElementById('quiz-container');
+        const scoreEl = document.getElementById('score');
+        const completedEl = document.getElementById('completed');
+        const progressFill = document.getElementById('progress');
+        const progressText = document.getElementById('progress-text');
+
+        function renderQuiz() {
+            container.innerHTML = '';
+            quizData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-num">Q${item.id}</span>
+                        <span style="color:var(--text-muted); font-size:0.85rem;">${index + 1}/60</span>
+                    </div>
+                    <div class="q-stem">${item.q}</div>
+                    <div class="options" id="opts-${item.id}">
+                        ${item.opts.map(opt => `
+                            <label class="option" data-val="${opt.charAt(0)}">
+                                <input type="radio" name="q${item.id}" value="${opt.charAt(0)}">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                    <button class="btn-check" id="btn-${item.id}" onclick="checkAnswer(${item.id})">Check Answer</button>
+                    <div class="rationale" id="rat-${item.id}">
+                        <strong>Explanation:</strong> ${item.rat}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswer(id) {
+            const selected = document.querySelector(`input[name="q${id}"]:checked`);
+            if (!selected) {
+                alert("Please select an answer before checking.");
+                return;
+            }
+            const item = quizData.find(q => q.id === id);
+            const selectedVal = selected.value;
+            const isCorrect = selectedVal === item.ans;
+            const opts = document.querySelectorAll(`#opts-${id} .option`);
+            const btn = document.getElementById(`btn-${id}`);
+            const rat = document.getElementById(`rat-${id}`);
+
+            opts.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.dataset.val === item.ans) opt.classList.add('correct');
+                if (opt.dataset.val === selectedVal && !isCorrect) opt.classList.add('incorrect');
+            });
+
+            btn.disabled = true;
+            btn.textContent = isCorrect ? "✓ Correct" : "✗ Incorrect";
+            btn.style.background = isCorrect ? "var(--success)" : "var(--error)";
+            rat.classList.add('show');
+
+            if (!document.querySelector(`#q-${id}-checked`)) {
+                completed++;
+                completedEl.textContent = completed;
+                if (isCorrect) score++;
+                scoreEl.textContent = score;
+                updateProgress();
+                const marker = document.createElement('span');
+                marker.id = `q-${id}-checked`;
+                marker.style.display = 'none';
+                document.body.appendChild(marker);
+            }
+        }
+
+        function updateProgress() {
+            const pct = Math.round((completed / 60) * 100);
+            progressFill.style.width = `${pct}%`;
+            progressText.textContent = `${pct}%`;
+        }
+
+        function resetQuiz() {
+            if(confirm("Are you sure you want to reset all progress?")) {
+                score = 0;
+                completed = 0;
+                scoreEl.textContent = 0;
+                completedEl.textContent = 0;
+                progressFill.style.width = '0%';
+                progressText.textContent = '0%';
+                document.querySelectorAll('[id^="q-"]').forEach(el => el.remove());
+                renderQuiz();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>
